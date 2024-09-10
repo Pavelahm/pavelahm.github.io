@@ -1,0 +1,40 @@
+project:
+  type: website
+
+website:
+  title: "Pavel's Profile"  # Title of the website
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
+      - text: Projects
+        href: projects.qmd
+    right:
+      - text: Contact
+        href: contact.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo    # Light theme from Bootstrap
+      dark: slate     # Optional dark theme for night mode
+    css: styles.css    # Optional: link to custom styles for further design
+    toc: true         # Enable Table of Contents
+    toc-depth: 3      # Set the depth of the TOC
+    toc-location: left  # Location of TOC (can be "left", "right", etc.)
+    number-sections: true  # Automatically number sections
+    code-fold: true   # Fold code blocks to keep the page clean
+    anchor-sections: true  # Add anchors to sections for easier navigation
+
+footer:
+  text: |
+    <p>© 2024 Pavel's Profile | <a href="mailto:pavel@example.com">Contact</a></p>
+
+# Optional: Add Google Fonts for better typography
+fonts:
+  heading: "Roboto"
+  text: "Open Sans"
+
+
