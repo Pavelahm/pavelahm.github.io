@@ -575,6 +575,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
         return selector;
       }
+    <img src="B612_20240204_235939_517.jpg" alt="My photo" width="70" height="auto" />
+
       const selectCodeLines = (annoteEl) => {
         const doc = window.document;
         const targetCell = annoteEl.getAttribute("data-target-cell");
@@ -643,8 +645,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (selectedAnnoteEl) {
           selectCodeLines(selectedAnnoteEl);
         }
-        <img src="B612_20240204_235939_517.jpg" alt="My photo" width="50" height="auto" />
-
+      
       }, 10)
     );
     function throttle(fn, ms) {
