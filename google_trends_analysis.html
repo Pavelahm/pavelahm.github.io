@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Trends Data Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Trends Data Analysis</h1>
+
+    <h2>Objective:</h2>
+    <p>The goal of this assignment is to compare and analyze data on the search terms <strong>"Trump," "Kamala Harris,"</strong> and <strong>"Election"</strong> using two methods: the Google Trends website and the <code>gtrendsR</code> package in R. The analysis involves reviewing the data collected in terms of dates, intervals, and identifying differences between the two methods.</p>
+
+    <h2>Section A: Using Google Trends Website</h2>
+
+    <h3>1. Search Terms and Data Collection</h3>
+    <p>To begin the analysis, I visited the <a href="https://trends.google.com" target="_blank">Google Trends website</a> and input the search terms "Trump," "Kamala Harris," and "Election." I set the time range to <strong>2020-01-01 to 2023-12-31</strong> and chose the global region to maximize data collection.</p>
+
+    <p>After entering the terms, Google Trends generated a comparative interest graph showing the relative popularity of each term over time. I downloaded the data by clicking the download icon, which saved the information as a <code>.csv</code> file.</p>
+
+    <h3>2. Data Analysis</h3>
+    <p><strong>a. Dates:</strong> The data from the Google Trends website is broken down by weeks. Each row represents the relative search interest for each search term during a given week, starting from January 2020 to December 2023.</p>
+    <p><strong>b. Intervals:</strong> The website provides weekly data intervals. The search interest is given as an index (0-100), where 100 represents peak popularity.</p>
+    <p><strong>c. Observations:</strong> The data shows peaks in search interest around significant political events, such as the 2020 U.S. Presidential Election and key announcements.</p>
+
+    <h2>Section B: Using gtrendsR Package</h2>
+
+    <h3>1. Data Collection with gtrendsR</h3>
+    <p>I used the <code>gtrendsR</code> package in R to collect data for the same search terms. Below is the R code I used:</p>
+    <code>
+        # Load necessary libraries<br>
+        library(gtrendsR)<br><br>
+        # Define the search terms and time range<br>
+        terms <- c("Trump", "Kamala Harris", "Election")<br>
+        time_range <- "2020-01-01 2023-12-31"<br><br>
+        # Fetch Google Trends data<br>
+        trends_data <- gtrends(terms, time = time_range)<br><br>
+        # View the data<br>
+        head(trends_data$interest_over_time)<br><br>
+        # Save the data to a CSV file<br>
+        write.csv(trends_data$interest_over_time, "gtrends_data.csv")
+    </code>
+    <p>The <code>gtrends()</code> function fetched data for the search terms, also broken down by weekly intervals.</p>
+
+    <h3>2. Data Analysis</h3>
+    <p><strong>a. Dates:</strong> The data from <code>gtrendsR</code> is also broken down by weekly intervals, covering January 2020 to December 2023.</p>
+    <p><strong>b. Intervals:</strong> The data intervals collected via <code>gtrendsR</code> are weekly, similar to the website data.</p>
+    <p><strong>c. Observations:</strong> The trends observed align with those from the Google Trends website, showing peaks in interest for the search terms during key political events.</p>
+
+    <h2>Section C: Comparison of the Two Methods</h2>
+
+    <h3>1. Differences Between the Methods</h3>
+    <p><strong>a. Ease of Use:</strong> The Google Trends website is intuitive and user-friendly, whereas the <code>gtrendsR</code> package offers more flexibility for automated data collection and analysis.</p>
+    <p><strong>b. Customization and Data Granularity:</strong> The Google Trends website offers more customization options, while <code>gtrendsR</code> is slightly more limited but provides weekly data intervals.</p>
+    <p><strong>c. Data Format:</strong> Data from the website is pre-formatted in a <code>.csv</code> file, while <code>gtrendsR</code> data is stored as a data frame in R for further manipulation.</p>
+
+    <h3>2. Summary of Key Differences</h3>
+    <p><strong>Flexibility:</strong> The <code>gtrendsR</code> package offers more automation and flexibility, while the Google Trends website is ideal for quick visualizations and smaller-scale projects.</p>
+
+    <h2>Conclusion:</h2>
+    <p>Both methods are effective for collecting Google Trends data, but each has its strengths depending on the user's familiarity with programming and the scale of data analysis required.</p>
+
+</body>
+</html>
