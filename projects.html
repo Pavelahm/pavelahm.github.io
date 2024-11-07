@@ -186,6 +186,63 @@ ul.task-list li input[type="checkbox"] {
 <img src="https://raw.githubusercontent.com/Pavelahm/pavelahm.github.io/main/Sentiment%20Analysis.png" alt="Sentiment Analysis of Biden-Xi Summit" width="840" height="512">
 <img src="https://raw.githubusercontent.com/Pavelahm/pavelahm.github.io/main/Presendential%20Inauguration%20Speech.png" alt="Presidential Inauguration Speech" width="840" height="512">
 <img src="https://raw.githubusercontent.com/Pavelahm/pavelahm.github.io/main/output%20(1).png" alt="Output Image" width="800">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Projects</h1>
+
+    <section id="inaugural-speeches-analysis">
+        <h2>Analysis of U.S. Presidential Inaugural Speeches</h2>
+        <p>
+            <a href="#" onclick="toggleVisibility('analysisContent'); return false;">
+                Click here to read the full analysis
+            </a>
+        </p>
+        <div id="analysisContent" style="display: none;">
+            <h3>Cosine Similarity Analysis</h3>
+            <p>The provided image illustrates some interesting points regarding similarities and differences over time among U.S. presidents, as reflected in their inaugural speeches. The cosine similarity heatmap reveals varying levels of similarity in language and themes across these speeches. A prominent diagonal line represents each speech compared to itself, displaying maximum similarity. Darker red blocks within the heatmap indicate higher similarity between certain pairs of speeches, suggesting that some presidents used similar themes, rhetoric, or focused on comparable issues. This is particularly evident among presidents who served in similar historical contexts or belonged to aligned political movements. For example, presidents like Franklin D. Roosevelt, who served multiple terms, likely maintained a more consistent rhetorical style and thematic focus across their own speeches, resulting in high similarity scores among his own addresses.</p>
+            
+            <h3>Wordfish Ideological Positioning</h3>
+            <p>The Wordfish ideological positioning chart provides further insights into the ideological orientation of each president's inaugural speech. In the early years, presidents like Adams, Jefferson, and Monroe are closely clustered, likely reflecting a shared foundational ideology centered on independence and nation-building. However, as time progresses, there is noticeable ideological dispersion, especially from the late 19th to the early 20th century—a period marked by significant social and political changes, including the Civil War, Reconstruction, and the Great Depression. Modern presidents exhibit even greater spread in ideological positions, mirroring shifts in the political landscape and changing national priorities. This includes a broader focus on economic challenges, social issues, globalization, and national security.</p>
+            
+            <h3>Wordfish Model Explanation</h3>
+            <p>According to the Quanteda website, Wordfish is a statistical model that estimates the position of texts on an ideological or policy scale based on word frequencies. It is an unsupervised method, meaning it doesn’t need labels to work. Wordfish is commonly used in political science to analyze and compare documents, like political speeches or party manifestos.</p>
+            <p>The model works by looking at how often words appear in different texts. From this, it finds a hidden dimension, such as ideology, that separates the texts. It assumes that texts with similar word usage are likely similar in ideology or policy stance. The result is a position for each text on a scale, usually shown as a single line where each document has its place compared to others.</p>
+            <p>Wordfish is helpful when texts don’t have clear ideological labels. It allows researchers to identify ideological patterns from word use alone. This approach can show how policy or ideological focus changes over time and highlight similarities and differences among texts in a collection.</p>
+        </div>
+    </section>
+
+    <script>
+        function toggleVisibility(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "none") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
