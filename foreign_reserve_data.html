@@ -1,0 +1,29 @@
+# Load necessary libraries
+library(rvest)
+library(dplyr)
+
+# URL of the Wikipedia page
+url <- "https://en.wikipedia.org/wiki/List_of_countries_by_foreign-exchange_reserves"
+
+# Read the page
+page <- read_html(url)
+
+# Extract all tables from the page
+tables <- page %>% html_nodes("table")
+
+# Loop through each table and save it as a CSV file
+for (i in seq_along(tables)) {
+  # Extract each table
+  table_data <- html_table(tables[[i]], fill = TRUE)
+  
+  # Define the filename for each table
+  file_name <- paste0("foreign_reserve_data_table_", i, ".csv")
+  
+  # Save the table as a CSV file
+  write.csv(table_data, file_name, row.names = FALSE)
+  
+  # Print a message confirming the table has been saved
+  print(paste("Table", i, "saved as", file_name))
+}
+
+print("All tables have been scraped and saved as CSV files.")
