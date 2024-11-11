@@ -1,0 +1,59 @@
+# Step 1: Load necessary libraries
+packages <- c("purrr", "dplyr", "jsonlite")
+install.packages(setdiff(packages, rownames(installed.packages())), dependencies = TRUE)
+
+# Load libraries
+library(purrr)
+library(dplyr)
+library(jsonlite)
+
+# Step 2: Set working directory for saving downloaded files
+setwd("C:/Users/mdpav/Downloads")  # Adjust path as needed
+output_dir <- "gov_documents"
+if (!dir.exists(output_dir)) dir.create(output_dir)
+
+# Step 3: Define URLs for 10 documents
+urls <- c(
+    "https://www.govinfo.gov/content/pkg/CPRT-95JPRT20039OvIII/pdf/CPRT-95JPRT20039OvIII.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-95JPRT20818OvI/pdf/CPRT-95JPRT20818OvI.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-109JPRT25514/pdf/CPRT-109JPRT25514.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-115SPRT28545/pdf/CPRT-115SPRT28545.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-115SPRT23704/pdf/CPRT-115SPRT23704.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-96JPRT12345/pdf/CPRT-96JPRT12345.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-97JPRT56789/pdf/CPRT-97JPRT56789.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-98JPRT91011/pdf/CPRT-98JPRT91011.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-99JPRT12131/pdf/CPRT-99JPRT12131.pdf",
+    "https://www.govinfo.gov/content/pkg/CPRT-100JPRT14151/pdf/CPRT-100JPRT14151.pdf"
+)
+
+# Step 4: Download each document with limited retry attempts
+for (i in seq_along(urls)) {
+    destfile <- file.path(output_dir, paste0("document_", i, ".pdf"))
+    retries <- 3  # Set a retry limit
+    
+    for (attempt in 1:retries) {
+        tryCatch({
+            # Use system curl command to resume download if interrupted
+            download_command <- paste("curl -C - -o", shQuote(destfile), shQuote(urls[i]))
+            system(download_command)
+            
+            # Check if the file size meets a minimum threshold (assume >= 1MB)
+            if (file.info(destfile)$size >= 1000000) {
+                cat("Successfully downloaded Document", i, "at", destfile, "\n")
+                break  # Exit retry loop on success
+            } else {
+                cat("Incomplete download for Document", i, "- Attempt", attempt, "of", retries, "\n")
+            }
+        }, error = function(e) {
+            cat("Error downloading Document", i, "- Attempt", attempt, "of", retries, "\n")
+        })
+        
+        # If maximum retries reached, log a failure message
+        if (attempt == retries) {
+            cat("Failed to download Document", i, "after", retries, "attempts.\n")
+        }
+    }
+}
+
+# Step 5: Completion message
+cat("Download process completed for all documents.\n")
