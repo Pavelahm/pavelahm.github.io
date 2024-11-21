@@ -1,0 +1,47 @@
+Report: Challenges and Usability of Scraped Data
+1. Difficulties Encountered in the Scraping Process
+The process of scraping foreign exchange reserve data from Wikipedia using rvest was successful, but it presented several challenges:
+
+Duplicated Columns:
+
+The scraped table contained multiple columns with identical or similar names (e.g., UN Geoscheme, Forex reserves excluding gold).
+This created ambiguity in selecting the correct columns for analysis.
+Formatting Issues:
+
+The data in the reserves column was formatted as strings with commas, requiring preprocessing to convert it to numeric format for visualization.
+Some rows contained missing or non-numeric values, which had to be filtered out.
+HTML Table Structure:
+
+The structure of the HTML table on the Wikipedia page included nested headers, which contributed to duplicated column names and required additional inspection to correctly identify and clean the data.
+Dynamic Nature of Web Content:
+
+The table's structure or contents could change if Wikipedia is updated, potentially breaking the script in the future.
+2. Usability of the Scraped Data
+Despite the challenges, the data is highly usable for analysis after cleaning:
+
+Strengths:
+
+The scraped table provides comprehensive information, including country names, regional classifications, and reserve amounts.
+The data is in a tabular format, making it straightforward to process and visualize after cleaning.
+Limitations:
+
+The presence of duplicated and non-numeric columns required significant preprocessing to make the data usable.
+Missing values or inconsistent formatting in the reserves column could lead to data loss during cleaning.
+3. Suggestions for Improvement
+To make the scraping process more robust and efficient:
+
+Automate Column Selection:
+
+Use column indexing dynamically to select only the relevant columns (e.g., Countries and a single Forex reserves excluding gold column), avoiding hardcoding column names.
+Handle Formatting Issues:
+
+Automate the conversion of reserves data to numeric format while removing commas and filtering out non-numeric values
+Error Handling for Missing Data:
+
+Implement checks to handle rows with missing values or unexpected formatting gracefully.
+Future-Proofing
+
+Regularly verify the script against the webpage, as Wikipedia content can change. Alternatively, explore using APIs or other structured data sources where possible.
+Alternative Sources:
+
+For critical analyses, cross-check the scraped data with official reports or databases to ensure accuracy and completeness.
