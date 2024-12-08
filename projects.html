@@ -252,26 +252,76 @@ ul.task-list li input[type="checkbox"] {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Section Header Styling */
+        .project-section {
+            margin-left: 40px;  /* Adjust this value as needed */
+            margin-right: 40px;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        img {
+            display: block;
+            margin-top: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 40px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Navigation Section (Example) -->
-<ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="projects.html">Projects</a></li>
-</ul>
+<!-- Section: Foreign Exchange Reserve Data -->
+<section class="project-section">
+    <h2>4. Foreign Exchange Reserve Data</h2>
+    <p>Download Foreign Exchange Reserves Data Table</p>
+    <p>Foreign Exchange Reserves Data Code</p>
+    <p>View <a href="#">govtdata01 R Script</a></p>
+    <p>Access the PDF documents here: <a href="#">Google Drive PDF Folder</a></p>
+    <p>Download Report: <a href="#">Challenges and Usability</a></p>
+</section>
 
-<!-- YouTube Data Analysis Section -->
-<section id="youtube-analysis">
-    <h2 style="font-size: 28px; font-weight: bold;">5. YouTube Data Analysis Project</h2>
+<!-- Section: YouTube Data Analysis -->
+<section class="project-section">
+    <h2>5. YouTube Data Analysis Project</h2>
     <p>This project analyzes video statistics and comments from CNN's YouTube channel using the YouTube Data API.</p>
-    
+
     <!-- Display the Image -->
     <img src="https://github.com/Pavelahm/pavelahm.github.io/raw/main/output%20(3).png" 
-         alt="CNN Video Analysis Results" 
-         width="800" 
-         height="450">
-    
+         alt="CNN Video Analysis Results">
+
     <p>The visualization shows the analysis results of CNN’s YouTube videos.</p>
 </section>
 
@@ -282,8 +332,6 @@ ul.task-list li input[type="checkbox"] {
 
 </body>
 </html>
-
-
     <script>
         function toggleVisibility(id) {
             var element = document.getElementById(id);
