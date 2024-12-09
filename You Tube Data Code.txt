@@ -1,0 +1,93 @@
+# Install and Load Required Libraries
+install.packages(c("tuber", "httpuv", "quanteda", "ggplot2", "dplyr", "tm", "wordcloud"))
+
+# Load libraries
+library(tuber)
+library(httpuv)
+library(quanteda)
+library(ggplot2)
+library(dplyr)
+library(tm)
+library(wordcloud)
+
+# Authenticate with YouTube Data API v3
+yt_oauth(api_key = "AIzaSyDAXUBDSYMwLdieAG0W4lmSToy53f8fTVk")
+
+# Fetch Channel Stats (CNN Channel)
+cnn_channel_id <- "UCupvZG-5ko_eiXAupbDfxWw"
+cnn_stats <- get_channel_stats(cnn_channel_id)
+print(cnn_stats)
+
+# Fetch Videos from CNN’s YouTube Channel
+cnn_videos <- yt_search(term = "news", channel_id = cnn_channel_id, max_results = 5)
+print(cnn_videos)
+
+# Fetch Video Details and Comments
+video_id <- cnn_videos$video_id[1]
+video_details <- get_video_details(video_id)
+print(video_details)
+
+# Fetch Comments from the First Video
+comments <- get_comment_threads(video_id = video_id, max_results = 50)
+comment_text <- comments$textDisplay
+print(comment_text)
+
+# Analyze Video Stats
+video_stats <- do.call(rbind, lapply(cnn_videos$video_id, function(id) {
+  details <- get_video_details(id)
+  data.frame(
+    Title = details$snippet$title,
+    Views = as.numeric(details$statistics$viewCount),
+    Likes = as.numeric(details$statistics$likeCount),
+    Comments = as.numeric(details$statistics$commentCount),
+    stringsAsFactors = FALSE
+  )
+}))
+
+# Print Video Stats
+print(video_stats)
+
+# Average Stats
+avg_views <- mean(video_stats$Views, na.rm = TRUE)
+avg_likes <- mean(video_stats$Likes, na.rm = TRUE)
+avg_comments <- mean(video_stats$Comments, na.rm = TRUE)
+
+cat("Average Views:", avg_views, "\n")
+cat("Average Likes:", avg_likes, "\n")
+cat("Average Comments:", avg_comments, "\n")
+
+# Create a Visualization of Video Stats
+ggplot(video_stats, aes(x = Views, y = Likes, label = Title)) +
+  geom_point(color = "blue", size = 3) +
+  geom_text(aes(label = Title), hjust = 1.1, vjust = 1.1, size = 3) +
+  labs(title = "CNN YouTube Video Stats: Views vs Likes", x = "Views", y = "Likes") +
+  theme_minimal()
+
+# Text Analysis of Comments with Quanteda
+corpus <- corpus(comment_text)
+dfm <- dfm(corpus, remove_punct = TRUE, remove = stopwords("en"))
+top_words <- topfeatures(dfm, 10)
+print(top_words)
+
+# Generate Word Cloud
+set.seed(123)
+text <- tolower(unlist(comment_text))
+word_freq <- table(unlist(strsplit(text, "\\W+")))
+word_freq_df <- as.data.frame(word_freq, stringsAsFactors = FALSE)
+colnames(word_freq_df) <- c("Word", "Freq")
+word_freq_df <- word_freq_df %>% filter(!Word %in% stopwords("en"))
+
+# Create Word Cloud
+wordcloud(words = word_freq_df$Word, freq = word_freq_df$Freq, max.words = 50, colors = brewer.pal(8, "Dark2"))
+
+# Sentiment Analysis Visualization
+comment_tokens <- tokens(corpus, remove_punct = TRUE)
+dfm_sentiment <- dfm(comment_tokens, remove = stopwords("en"))
+
+# Word Frequency Bar Plot
+textstat_frequency(dfm_sentiment, n = 10) %>%
+  ggplot(aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_bar(stat = "identity", fill = "darkblue") +
+  coord_flip() +
+  labs(title = "Most Common Words in CNN YouTube Comments", x = "Words", y = "Frequency") +
+  theme_minimal()
