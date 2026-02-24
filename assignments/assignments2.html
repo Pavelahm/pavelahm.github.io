@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cross-Model SLR Prompting Workflow (DM/ML Applications)</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#121826;
+      --text:#e8eef7;
+      --muted:#b7c3d6;
+      --line:#243044;
+      --accent:#79b8ff;
+      --accent2:#a7f3d0;
+      --warn:#fbbf24;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: linear-gradient(180deg, var(--bg), #070a0f 60%);
+      color:var(--text);
+      line-height:1.55;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 64px}
+    header{
+      padding:18px 18px 8px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(18,24,38,.7);
+      backdrop-filter: blur(6px);
+    }
+    h1{margin:0 0 6px;font-size:1.65rem;letter-spacing:.2px}
+    .subtitle{margin:0;color:var(--muted)}
+    nav{
+      margin-top:14px;
+      display:flex;flex-wrap:wrap;gap:10px
+    }
+    nav a{
+      color:var(--text);
+      text-decoration:none;
+      border:1px solid var(--line);
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      font-size:.92rem;
+    }
+    nav a:hover{border-color:rgba(121,184,255,.7); box-shadow:0 0 0 3px rgba(121,184,255,.12)}
+    section{
+      margin-top:18px;
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(18,24,38,.55);
+    }
+    h2{margin:0 0 10px;font-size:1.25rem}
+    h3{margin:14px 0 8px;font-size:1.05rem;color:var(--accent)}
+    .badge{
+      display:inline-block;
+      font-size:.78rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      margin-left:8px;
+      vertical-align:middle;
+    }
+    .callout{
+      border:1px solid rgba(121,184,255,.35);
+      background:rgba(121,184,255,.08);
+      padding:12px 12px;
+      border-radius:12px;
+      color:var(--text);
+      margin:10px 0;
+    }
+    .callout strong{color:var(--accent)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 920px){
+      .grid{grid-template-columns: 1fr 1fr}
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      background:rgba(0,0,0,.18);
+    }
+    pre{
+      margin:10px 0 0;
+      padding:12px;
+      border-radius:12px;
+      overflow:auto;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.25);
+      color:var(--text);
+      font-size:.92rem;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:920px;
+      background:rgba(0,0,0,.12);
+    }
+    caption{
+      caption-side:bottom;
+      padding:10px 12px;
+      color:var(--muted);
+      text-align:left;
+      font-size:.92rem;
+    }
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding:10px 12px;
+      vertical-align:top;
+      text-align:left;
+    }
+    th{
+      position:sticky;
+      top:0;
+      background:rgba(18,24,38,.95);
+      z-index:1;
+      font-weight:650;
+    }
+    td{color:var(--text)}
+    .muted{color:var(--muted)}
+    .k{color:var(--accent2); font-weight:600}
+    .w{color:var(--warn); font-weight:650}
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:.92rem;
+      text-align:center;
+    }
+    code{color:var(--accent2)}
+    ul{margin:8px 0 0 18px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Cross-Model Prompting Workflow for an SLR on DM/ML Applications</h1>
+      <p class="subtitle">Structured notes and refined prompts (ChatGPT, Copilot, Grok 3) prepared for GitHub Pages.</p>
+      <nav aria-label="Page sections">
+        <a href="#initial">1.1 Initial Prompt Creation</a>
+        <a href="#analysis">2. Analyze Model Responses</a>
+        <a href="#refine">3. Refine the Prompt</a>
+        <a href="#collab">4. Cross-Model Collaboration</a>
+        <a href="#reflection">5. Reflection</a>
+      </nav>
+    </header>
+
+    <section id="initial">
+      <h2>1.1 Initial Prompt Creation <span class="badge">Baseline</span></h2>
+      <div class="card">
+        <div class="callout">
+          <strong>Baseline Prompt</strong>
+          <div class="muted">Goal: a ~2,000-word structured systematic literature review (SLR) on real-world DM/ML applications.</div>
+        </div>
+        <pre>Conduct a 2,000-word structured systematic literature review on the applications of data mining and machine learning in real-world domains. Include a methodology section, synthesize key findings, identify major research trends and gaps, and propose one testable hypothesis. Use an academic tone and follow systematic literature review standards.</pre>
+      </div>
+    </section>
+
+    <section id="analysis">
+      <h2>2. Analyze Model Responses <span class="badge">Comparative Evaluation</span></h2>
+
+      <div class="table-wrap" role="region" aria-label="Comparative assessment table" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Evaluation Dimension</th>
+              <th>Copilot</th>
+              <th>ChatGPT</th>
+              <th>Grok 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="k">Structure</td>
+              <td>Strongest adherence to SLR standards; explicit RQs, detailed methodology, clear search strategy, and numerical study selection following PRISMA and Kitchenham.</td>
+              <td>Clear SLR structure with defined methodology and synthesis, but lacks numerical screening counts and formal quality appraisal.</td>
+              <td>Includes standard sections and screening statistics, but structure is uneven and closer to a survey.</td>
+            </tr>
+            <tr>
+              <td class="k">Methodological Rigor</td>
+              <td>High rigor with transparent procedures; minor omissions include no PRISMA flow diagram or formal quality assessment tool.</td>
+              <td>Moderate to high rigor; suitable for a narrative SLR but less procedurally detailed.</td>
+              <td>Moderate rigor; reports inter-rater reliability but lacks balanced methodological depth.</td>
+            </tr>
+            <tr>
+              <td class="k">Synthesis Quality</td>
+              <td>Well-integrated synthesis across domains; effectively links methods to operational needs.</td>
+              <td>Strong cross-domain conceptual synthesis with emphasis on real-world deployment challenges.</td>
+              <td>Largely descriptive; relies heavily on individual studies and metrics.</td>
+            </tr>
+            <tr>
+              <td class="k">Domains Covered</td>
+              <td>Healthcare, finance, manufacturing, transportation, education, environment.</td>
+              <td>Healthcare, finance, manufacturing, cybersecurity, energy, transportation, agriculture.</td>
+              <td>Healthcare, finance, transportation, agriculture, manufacturing, environment.</td>
+            </tr>
+            <tr>
+              <td class="k">Trends Identified</td>
+              <td>Explainable AI, federated learning, multimodal models, ethics.</td>
+              <td>End-to-end ML pipelines, IoT and edge computing, sustainability, governance and trust.</td>
+              <td>Explainable AI, federated learning, edge computing, multimodal learning.</td>
+            </tr>
+            <tr>
+              <td class="k">Research Gaps</td>
+              <td>Deployment-oriented gaps; not prioritized.</td>
+              <td>Clearly derived gaps related to validation, benchmarks, lifecycle management, and socio-technical integration.</td>
+              <td>Gaps mostly listed; limited analytical grounding.</td>
+            </tr>
+            <tr>
+              <td class="k">Hypothesis Quality</td>
+              <td>Realistic, relevant, and testable; focuses on trust and decision quality without harming performance.</td>
+              <td>Conservative, domain-agnostic, and testable; focuses on internal vs external validation performance.</td>
+              <td>Testable but theoretically weak; overstates accuracy gains from explainability.</td>
+            </tr>
+            <tr>
+              <td class="k">References</td>
+              <td>Credible venues cited but incomplete formatting; verification needed.</td>
+              <td>Credible sources cited but presented as web references; formal formatting required.</td>
+              <td>References imprecise and inconsistently formatted; substantial verification required.</td>
+            </tr>
+            <tr>
+              <td class="k">Strengths</td>
+              <td>Excellent structure, clear methodology, strong alignment with SLR standards, practical and realistic hypothesis.</td>
+              <td>Strong analytical synthesis, broad domain coverage, conservative and methodologically sound hypothesis.</td>
+              <td>Rich technical detail, concrete metrics, and broad exposure to recent ML methods.</td>
+            </tr>
+            <tr>
+              <td class="k">Weaknesses</td>
+              <td>Minor reporting issues; lack of PRISMA diagram and formal quality scoring.</td>
+              <td>Missing procedural details and formal reference formatting.</td>
+              <td>Weak synthesis depth, uneven structure, and questionable hypothesis assumptions.</td>
+            </tr>
+            <tr>
+              <td class="k">Overall Assessment</td>
+              <td><span class="w">Best overall</span> for structural rigor and methodological clarity.</td>
+              <td><span class="w">Best</span> for conceptual integration and analytical depth.</td>
+              <td>Useful as a technical survey but not a strict systematic review.</td>
+            </tr>
+          </tbody>
+          <caption><strong>Table 1.</strong> Comparative Assessment of ChatGPT, Copilot, and Grok 3 Responses</caption>
+        </table>
+      </div>
+    </section>
+
+    <section id="refine">
+      <h2>3. Refine the Prompt <span class="badge">Model-Specific Improvements</span></h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Refined Prompt for ChatGPT</h3>
+          <pre>Imagine you are conducting a 2,000-word systematic literature review on the applications of data mining and machine learning in real-world domains. Follow PRISMA-style reporting rigor. Explicitly report numerical screening counts, inclusion and exclusion decisions, and clearly describe the study selection process. Apply at least one formal quality appraisal approach to assess included studies. Synthesize findings across multiple domains, identify key trends and research gaps, and propose one conservative, testable hypothesis focused on real-world deployment challenges. Use fully formatted academic citations and maintain a rigorous academic tone.</pre>
+          <p class="muted"><strong>Rationale:</strong> Requires screening counts, explicit quality appraisal, and formal referencing while preserving strong synthesis and cautious hypothesis formulation.</p>
+        </div>
+
+        <div class="card">
+          <h3>Refined Prompt for Copilot</h3>
+          <pre>Imagine you are writing a 2,000-word PRISMA-compliant systematic literature review on real-world applications of data mining and machine learning. Maintain your current level of methodological detail, including explicit research questions, databases, search strings, and screening counts. In addition, include a concise quality assessment of included studies and briefly prioritize the most critical research gaps. Strengthen cross-domain synthesis by adding limited quantitative summaries where appropriate. Propose one testable hypothesis relevant to high-stakes applications, and provide fully formatted academic references.</pre>
+          <p class="muted"><strong>Rationale:</strong> Builds on strong structure by adding deeper synthesis, gap prioritization, quantitative summaries, and better references.</p>
+        </div>
+
+        <div class="card">
+          <h3>Refined Prompt for Grok 3</h3>
+          <pre>Imagine you are a data scientist conducting a 2,000-word systematic literature review on how data mining and machine learning are applied in real-world domains such as healthcare, finance, transportation, manufacturing, and agriculture. Clearly distinguish between descriptive examples and cross-domain synthesis. Reduce reliance on isolated performance metrics and focus on generalizable patterns and operational implications. Ensure the review follows PRISMA-style structure and balance all sections evenly. Propose one realistic, theory-grounded, testable hypothesis that aligns with existing evidence. Use verifiable academic citations and maintain a rigorous academic tone.</pre>
+          <p class="muted"><strong>Rationale:</strong> Targets descriptive-survey behavior by enforcing synthesis, theoretical grounding, balanced structure, and citation accuracy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="collab">
+      <h2>4. Cross-Model Collaboration <span class="badge">Preferred Model Prompt</span></h2>
+
+      <div class="card">
+        <div class="callout">
+          <strong>New Synthesis Prompt (Preferred Model)</strong>
+          <div class="muted">Goal: integrate the strongest components across drafts into one coherent PRISMA-style SLR.</div>
+        </div>
+        <pre>Using the three draft literature reviews produced by different AI models, write one integrated systematic literature review of about 2,000 words on real-world applications of data mining and machine learning.
+Follow PRISMA guidelines and clearly report the search strategy, screening process, inclusion and exclusion criteria, and study counts.
+Combine the strongest elements from each draft, including methodology, key findings, cross-domain trends, research gaps, and practical deployment challenges.
+Remove repeated content, standardize terminology, and ensure a clear and consistent academic structure.
+Conclude with one conservative, testable hypothesis that focuses on real-world implementation issues rather than algorithmic novelty.</pre>
+
+        <h3>Justification</h3>
+        <p>
+          I selected and integrated content from multiple AI-generated drafts by prioritizing methodological rigor, clarity, and relevance to real-world deployment. When drafts overlapped, I retained the version that most closely followed PRISMA guidelines and provided clearer reporting of search strategy, screening steps, and quality appraisal. I emphasized cross-domain patterns and practical implementation challenges rather than algorithmic novelty, as these issues were most consistently supported across the literature. Redundant content was removed, terminology was standardized, and domain-specific examples were included only when they contributed to broader analytical insights. The final hypothesis was chosen because it is conservative, testable, and directly grounded in the synthesized evidence. This process ensured that the final review is coherent, transparent, and academically sound.
+        </p>
+      </div>
+    </section>
+
+    <section id="reflection">
+      <h2>5. Reflection <span class="badge">Lessons Learned</span></h2>
+
+      <div class="card">
+        <p>
+          Each AI model approached the systematic review task differently. ChatGPT emphasized structure and methodological clarity, closely aligning with PRISMA standards by clearly outlining research questions, inclusion and exclusion criteria, screening stages, and quality appraisal. Grok 3 focused more on cross-domain synthesis and operational patterns, prioritizing conceptual integration and theory-driven insights over detailed methodological reporting. Copilot adopted a more evaluative and quantitative stance, foregrounding research questions, numerical summaries, and issues of trust, calibration, and uncertainty in real-world deployments.
+        </p>
+        <p>
+          Prompt refinements that explicitly specified structure and reporting standards produced the strongest results for ChatGPT, while synthesis-oriented prompts emphasizing patterns, resilience, and deployment context were most effective for Grok 3. For Copilot, prompts that requested explicit research questions, tables, and quantitative summaries led to clearer and more analytically focused outputs. Across models, vague prompts resulted in descriptive overviews, whereas precise constraints encouraged methodological rigor and academic tone.
+        </p>
+        <p>
+          Overall, this process demonstrated that AI is most effective for structured academic reviews when used iteratively and comparatively. Rather than relying on a single model, leveraging multiple AI systems allowed complementary strengths to emerge—structure from one, synthesis from another, and analytical precision from a third. The key lesson is that AI supports, but does not replace, scholarly judgment: the quality of the final review depends on the researcher’s ability to refine prompts, evaluate outputs critically, and synthesize results into a coherent academic narrative.
+        </p>
+
+        <h3>Optional: How to use on GitHub Pages</h3>
+        <ul class="muted">
+          <li>Save this file as <code>slr-prompting-workflow.html</code> inside your repo (e.g., in <code>/docs</code> if Pages is configured for that).</li>
+          <li>Commit and push, then link it from your homepage or navigation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>Prepared for GitHub Pages • HTML is self-contained (no external CSS/JS).</p>
+    </footer>
+  </div>
+</body>
+</html>
