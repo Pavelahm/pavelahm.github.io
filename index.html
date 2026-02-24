@@ -1,52 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pavel | PhD Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+    }
+
+    /* Force white background everywhere */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff !important;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    main.content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+      background: #ffffff !important;
+    }
+
+    header.quarto-title-block {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      background: #ffffff !important;
+    }
+
+    h1.title {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+
+    section.level1 {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      background: #ffffff !important;
+    }
+
+    section.level1 h2 {
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+
+    img.profile {
+      border-radius: 6px;
+      margin: 0.5rem 0 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    em {
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-  <div class="quarto-title">
-    <h1 class="title">Welcome to Pavel’s Profile</h1>
-  </div>
-</header>
-  
-<!-- ===== WELCOME ===== -->
-<section id="welcome" class="level1" data-number="1">
-  <h2>Welcome</h2>
+  <!-- ===== TITLE ===== -->
+  <header id="title-block-header" class="quarto-title-block default">
+    <div class="quarto-title">
+      <h1 class="title">Welcome to Pavel’s Profile</h1>
+    </div>
+  </header>
 
-  <img src="B612_20240204_235939_517.jpg" alt="My photo" width="120" />
+  <!-- ===== WELCOME ===== -->
+  <section id="welcome" class="level1" data-number="1">
+    <img
+      src="B612_20240204_235939_517.jpg"
+      alt="Photo of Pavel"
+      width="120"
+      class="profile"
+    />
 
-  <p>
-    Hi, I’m <strong>Pavel</strong>, a PhD candidate in <strong>Public Affairs</strong> at the
-    <strong>University of Texas at Dallas</strong>.
-  </p>
+    <p>
+      Hi, I’m <strong>Pavel</strong>, a PhD candidate in
+      <strong>Public Affairs</strong> at the
+      <strong>University of Texas at Dallas</strong>.
+    </p>
 
-  <p>
-    My research focuses on collaborative governance, human resources,
-    nonprofit management, and public administration.
-  </p>
-</section>
+    <p>
+      My research focuses on collaborative governance, human resources,
+      nonprofit management, and public administration.
+    </p>
+  </section>
 
-<!-- ===== ASSIGNMENTS (NEW COURSE) ===== -->
-<section id="assignments" class="level1" data-number="2">
-  <h2>Assignments</h2>
+  <!-- ===== ASSIGNMENTS ===== -->
+  <section id="assignments" class="level1" data-number="2">
+    <h2>Assignments</h2>
 
-  <p>
-    This section contains assignments submitted for my current course.
-  </p>
+    <p>
+      This section contains assignments submitted for my current course.
+    </p>
 
-  <ul>
-    <li>
-      <strong>Assignment 1:</strong>
-      <a href="assignments/assignment1.html">View Assignment</a>
-    </li>
+    <ul>
+      <li>
+        <strong>Assignment 1:</strong>
+        <a href="assignments/assignment1.html">View Assignment</a>
+      </li>
 
-    <li>
-      <strong>Assignment 2:</strong>
-      <a href="assignments/assignment2.html">View Assignment</a>
-    </li>
+      <li>
+        <strong>Assignment 2:</strong>
+        <a href="assignments/assignment2.html">View Assignment</a>
+      </li>
 
-    <li>
-      <strong>Assignment 3:</strong>
-      <em>To be uploaded</em>
-    </li>
-  </ul>
-</section>
+      <li>
+        <strong>Assignment 3:</strong>
+        <em>To be uploaded</em>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== REFLECTIONS ===== -->
+  <section id="reflections" class="level1" data-number="3">
+    <h2>Reflections</h2>
+
+    <p>
+      This section contains reflection essays submitted for the course.
+    </p>
+
+    <ul>
+      <li>
+        <strong>Reflection 1 (Class 1):</strong>
+        <a href="reflections/reflection1.html">View Reflection</a>
+      </li>
+
+      <li>
+        <strong>Reflection 2 (Class 2):</strong>
+        <a href="reflections/reflection2.html">View Reflection</a>
+      </li>
+
+      <li>
+        <strong>Reflection 3:</strong>
+        <em>To be uploaded</em>
+      </li>
+    </ul>
+  </section>
 
 </main>
+
+</body>
+</html>
