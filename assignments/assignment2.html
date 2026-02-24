@@ -1,277 +1,223 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
+  <title>Cross-Model SLR Prompting Workflow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cross-Model SLR Prompting Workflow (DM/ML Applications)</title>
 
   <style>
-    :root{
-      --bg:#ffffff;
-      --card:#ffffff;
-      --soft:#f9fafb;
-      --text:#111827;
-      --muted:#4b5563;
-      --line:#e5e7eb;
-      --accent:#2563eb;
-      --accent2:#059669;
-      --warn:#d97706;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #111827;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
     }
 
-    * { box-sizing:border-box; }
-
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI,
-                   Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height:1.6;
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+      background: #ffffff;
     }
 
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:28px 18px 64px;
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
     }
 
-    header{
-      padding:18px 18px 8px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background: var(--card);
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.3rem;
     }
 
-    h1{
-      margin:0 0 6px;
-      font-size:1.65rem;
+    h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
     }
 
-    .subtitle{
-      margin:0;
-      color:var(--muted);
+    p {
+      margin-top: 0.75rem;
     }
 
-    nav{
-      margin-top:14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.25rem;
+      font-size: 0.95rem;
     }
 
-    nav a{
-      color:var(--accent);
-      text-decoration:none;
-      border:1px solid var(--line);
-      padding:8px 10px;
-      border-radius:999px;
-      background:var(--soft);
-      font-size:.92rem;
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.6rem;
+      vertical-align: top;
+      text-align: left;
     }
 
-    nav a:hover{
-      background:#eef2ff;
+    th {
+      background: #f9fafb;
+      font-weight: 600;
     }
 
-    section{
-      margin-top:18px;
-      padding:18px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background: var(--card);
+    caption {
+      caption-side: bottom;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #4b5563;
+      text-align: left;
     }
 
-    h2{
-      margin:0 0 10px;
-      font-size:1.25rem;
+    pre {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 1rem;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      margin-top: 0.75rem;
     }
 
-    h3{
-      margin:14px 0 8px;
-      font-size:1.05rem;
-      color:var(--accent);
+    .rationale {
+      color: #374151;
+      margin-top: 0.5rem;
     }
-
-    .badge{
-      display:inline-block;
-      font-size:.78rem;
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      color:var(--muted);
-      margin-left:8px;
-    }
-
-    .callout{
-      border:1px solid #c7d2fe;
-      background:#eef2ff;
-      padding:12px;
-      border-radius:12px;
-      margin:10px 0;
-    }
-
-    .callout strong{
-      color:var(--accent);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-
-    @media (min-width:920px){
-      .grid{ grid-template-columns:1fr 1fr; }
-    }
-
-    .card{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      background: var(--soft);
-    }
-
-    pre{
-      margin:10px 0 0;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:#f3f4f6;
-      color:#111827;
-      font-size:.92rem;
-      white-space:pre-wrap;
-    }
-
-    .table-wrap{
-      overflow:auto;
-      border-radius:14px;
-      border:1px solid var(--line);
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:920px;
-      background:#ffffff;
-    }
-
-    th, td{
-      border-bottom:1px solid var(--line);
-      padding:10px 12px;
-      vertical-align:top;
-      text-align:left;
-    }
-
-    th{
-      background:#f9fafb;
-      font-weight:600;
-    }
-
-    caption{
-      caption-side:bottom;
-      padding:10px 12px;
-      color:var(--muted);
-      font-size:.92rem;
-    }
-
-    .muted{ color:var(--muted); }
-    .k{ color:var(--accent2); font-weight:600; }
-    .w{ color:var(--warn); font-weight:650; }
-
-    footer{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:.92rem;
-      text-align:center;
-    }
-
-    code{ color:var(--accent2); }
-    ul{ margin:8px 0 0 18px; }
   </style>
 </head>
 
 <body>
-<div class="wrap">
 
-<header>
-  <h1>Cross-Model Prompting Workflow for an SLR on DM/ML Applications</h1>
-  <p class="subtitle">
-    Structured notes and refined prompts (ChatGPT, Copilot, Grok 3) prepared for GitHub Pages.
-  </p>
+<main>
 
-  <nav>
-    <a href="#initial">1. Initial Prompt</a>
-    <a href="#analysis">2. Model Analysis</a>
-    <a href="#refine">3. Prompt Refinement</a>
-    <a href="#collab">4. Collaboration</a>
-    <a href="#reflection">5. Reflection</a>
-  </nav>
-</header>
+  <h1>Cross-Model Prompting Workflow for a Systematic Literature Review</h1>
 
-<section id="initial">
-  <h2>1. Initial Prompt Creation <span class="badge">Baseline</span></h2>
+  <!-- 1. Initial Prompt -->
+  <h2>1. Initial Prompt Creation</h2>
 
-  <div class="card">
-    <div class="callout">
-      <strong>Baseline Prompt</strong>
-      <div class="muted">
-        Goal: a ~2,000-word structured systematic literature review (SLR).
-      </div>
-    </div>
-
-    <pre>
+  <h3>Baseline Prompt</h3>
+  <pre>
 Conduct a 2,000-word structured systematic literature review on the applications of
 data mining and machine learning in real-world domains. Include a methodology
 section, synthesize key findings, identify major research trends and gaps, and
 propose one testable hypothesis. Use an academic tone and follow systematic
 literature review standards.
-    </pre>
-  </div>
-</section>
+  </pre>
 
-<section id="analysis">
+  <!-- 2. Analysis -->
   <h2>2. Analyze Model Responses</h2>
-  <p>
-    Three AI models were evaluated across structure, methodological rigor,
-    synthesis quality, domain coverage, research gaps, and hypothesis formulation.
-    Copilot demonstrated the strongest structural rigor, ChatGPT excelled at
-    conceptual synthesis, and Grok 3 provided rich technical detail but weaker
-    systematic integration.
-  </p>
-</section>
 
-<section id="refine">
+  <table>
+    <thead>
+      <tr>
+        <th>Evaluation Dimension</th>
+        <th>Copilot</th>
+        <th>ChatGPT</th>
+        <th>Grok 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Structure</td>
+        <td>Strongest adherence to SLR standards; explicit RQs, detailed methodology, clear search strategy, and numerical study selection following PRISMA and Kitchenham.</td>
+        <td>Clear SLR structure with defined methodology and synthesis, but lacks numerical screening counts and formal quality appraisal.</td>
+        <td>Includes standard sections and screening statistics, but structure is uneven and closer to a survey.</td>
+      </tr>
+      <tr>
+        <td>Methodological Rigor</td>
+        <td>High rigor with transparent procedures; minor omissions include no PRISMA flow diagram or formal quality assessment tool.</td>
+        <td>Moderate to high rigor; suitable for a narrative SLR but less procedurally detailed.</td>
+        <td>Moderate rigor; reports inter-rater reliability but lacks balanced methodological depth.</td>
+      </tr>
+      <tr>
+        <td>Synthesis Quality</td>
+        <td>Well-integrated synthesis across domains; effectively links methods to operational needs.</td>
+        <td>Strong cross-domain conceptual synthesis with emphasis on real-world deployment challenges.</td>
+        <td>Largely descriptive; relies heavily on individual studies and metrics.</td>
+      </tr>
+      <tr>
+        <td>Domains Covered</td>
+        <td>Healthcare, finance, manufacturing, transportation, education, environment.</td>
+        <td>Healthcare, finance, manufacturing, cybersecurity, energy, transportation, agriculture.</td>
+        <td>Healthcare, finance, transportation, agriculture, manufacturing, environment.</td>
+      </tr>
+      <tr>
+        <td>Trends Identified</td>
+        <td>Explainable AI, federated learning, multimodal models, ethics.</td>
+        <td>End-to-end ML pipelines, IoT and edge computing, sustainability, governance and trust.</td>
+        <td>Explainable AI, federated learning, edge computing, multimodal learning.</td>
+      </tr>
+      <tr>
+        <td>Research Gaps</td>
+        <td>Deployment-oriented gaps; not prioritized.</td>
+        <td>Clearly derived gaps related to validation, benchmarks, lifecycle management, and socio-technical integration.</td>
+        <td>Gaps mostly listed; limited analytical grounding.</td>
+      </tr>
+      <tr>
+        <td>Hypothesis Quality</td>
+        <td>Realistic, relevant, and testable; focuses on trust and decision quality without harming performance.</td>
+        <td>Conservative, domain-agnostic, and testable; focuses on internal vs external validation performance.</td>
+        <td>Testable but theoretically weak; overstates accuracy gains from explainability.</td>
+      </tr>
+      <tr>
+        <td>References</td>
+        <td>Credible venues cited but incomplete formatting; verification needed.</td>
+        <td>Credible sources cited but presented as web references; formal formatting required.</td>
+        <td>References imprecise and inconsistently formatted; substantial verification required.</td>
+      </tr>
+      <tr>
+        <td>Overall Assessment</td>
+        <td>Best overall for structural rigor and methodological clarity.</td>
+        <td>Best for conceptual integration and analytical depth.</td>
+        <td>Useful as a technical survey but not a strict systematic review.</td>
+      </tr>
+    </tbody>
+    <caption>
+      Table 1. Comparative Assessment of ChatGPT, Copilot, and Grok 3 Responses
+    </caption>
+  </table>
+
+  <!-- 3. Refinement -->
   <h2>3. Refine the Prompt</h2>
-  <p>
-    Model-specific prompt refinements were introduced to address each system’s
-    limitations while preserving their strengths. Emphasis was placed on PRISMA
-    reporting, quality appraisal, and conservative hypothesis formulation.
-  </p>
-</section>
 
-<section id="collab">
+  <h3>Refined Prompt for ChatGPT</h3>
+  <p class="rationale">
+    Requires numerical screening details, formal quality appraisal, and academic referencing while
+    preserving analytical synthesis and cautious hypothesis formulation.
+  </p>
+
+  <h3>Refined Prompt for Copilot</h3>
+  <p class="rationale">
+    Builds on strong methodological rigor by encouraging deeper synthesis, gap prioritization, and
+    improved reference formatting.
+  </p>
+
+  <h3>Refined Prompt for Grok 3</h3>
+  <p class="rationale">
+    Addresses descriptive tendencies by emphasizing synthesis, theoretical grounding, and balanced
+    PRISMA-style structure.
+  </p>
+
+  <!-- 4. Collaboration -->
   <h2>4. Cross-Model Collaboration</h2>
   <p>
-    Insights from all three models were integrated into a single, coherent
-    systematic literature review. Redundant content was removed, terminology
-    standardized, and priority given to deployment-oriented research challenges.
+    A new synthesis prompt was used to integrate the strongest elements across drafts, prioritizing
+    methodological transparency, cross-domain insights, and real-world deployment challenges.
   </p>
-</section>
 
-<section id="reflection">
+  <!-- 5. Reflection -->
   <h2>5. Reflection</h2>
   <p>
-    This process demonstrated that AI is most effective for academic research
-    when used iteratively and comparatively. Structure, synthesis, and analytical
-    precision emerged from different models, reinforcing that scholarly judgment
-    remains essential for coherence, validity, and originality.
+    This process demonstrated that AI is most effective for structured academic reviews when used
+    iteratively and comparatively. Different models contributed complementary strengths—structure,
+    synthesis, and analytical precision—while scholarly judgment remained essential for coherence,
+    validity, and originality.
   </p>
-</section>
 
-<footer>
-  Prepared for GitHub Pages • Light theme • Fully readable
-</footer>
+</main>
 
-</div>
 </body>
 </html>
