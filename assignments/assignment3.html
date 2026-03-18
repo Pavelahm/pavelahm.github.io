@@ -1,42 +1,515 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Assignment 3 - Machine Learning Exercise</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment 3 - Machine Learning Exercise</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+      background: #fff;
+    }
+    h1, h2, h3 {
+      color: #1a1a1a;
+    }
+    h1 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 16px;
+      overflow-x: auto;
+      border-left: 4px solid #888;
+      white-space: pre-wrap;
+    }
+    code {
+      font-family: Consolas, monospace;
+    }
+    .figure-note {
+      font-style: italic;
+      margin-top: 10px;
+    }
+    hr {
+      margin: 30px 0;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Assignment 3: Machine Learning Exercise</h1>
-<p><strong>Course:</strong> EPPS – Knowledge Mining</p>
+  <h1>Assignment 3: Machine Learning Exercise</h1>
+  <p><strong>Course:</strong> EPPS – Knowledge Mining</p>
+  <p><strong>Dataset:</strong> TEDS 2016 Survey Data</p>
 
-<h2>1. Linear Regression Overview</h2>
-<p>
-Linear regression models the relationship between a dependent variable and one or more
-independent variables. The model is written as:
-</p>
+  <hr>
 
-<p><strong>Y = β₀ + β₁X + ε</strong></p>
+  <h2>1. Review of ISLR Chapter 3 (Linear Regression)</h2>
+  <p>
+    Chapter 3 of <em>Introduction to Statistical Learning (ISLR)</em> focuses on linear regression,
+    one of the most fundamental methods in statistical learning. Linear regression models the
+    relationship between a dependent variable and one or more predictor variables by fitting a line
+    that minimizes the difference between observed and predicted values.
+  </p>
 
-<ul>
-<li>Y = dependent variable</li>
-<li>X = independent variable</li>
-<li>β₀ = intercept</li>
-<li>β₁ = slope</li>
-<li>ε = error term</li>
-</ul>
+  <p>A simple linear regression model can be written as:</p>
+  <p><strong>Y = β<sub>0</sub> + β<sub>1</sub>X + ε</strong></p>
 
-<h2>Key Concepts</h2>
-<ul>
-<li>Simple Linear Regression</li>
-<li>Multiple Linear Regression</li>
-<li>Least Squares Estimation</li>
-<li>Model Evaluation (R², etc.)</li>
-</ul>
+  <p>where</p>
+  <ul>
+    <li><strong>Y</strong> is the dependent variable</li>
+    <li><strong>X</strong> is the predictor variable</li>
+    <li><strong>β<sub>0</sub></strong> is the intercept</li>
+    <li><strong>β<sub>1</sub></strong> is the slope</li>
+    <li><strong>ε</strong> represents random error</li>
+  </ul>
 
-<h2>Discussion</h2>
-<p>
-Graphs should be placed after the model explanation section to support interpretation.
-The dependent variable is the outcome being predicted, such as performance or behavior.
-</p>
+  <p>Chapter 3 explains several important concepts:</p>
+  <ul>
+    <li><strong>Simple Linear Regression</strong> – modeling the relationship between one predictor and the response variable.</li>
+    <li><strong>Multiple Linear Regression</strong> – using multiple predictors to explain variation in the response variable.</li>
+    <li><strong>Least Squares Estimation</strong> – estimating coefficients by minimizing the sum of squared errors.</li>
+    <li><strong>Model Evaluation</strong> – using measures such as R², residual standard error, and hypothesis tests to assess model performance.</li>
+  </ul>
+
+  <p>
+    The chapter also discusses the limitations of linear regression, particularly when the response
+    variable is categorical rather than continuous, which requires classification models such as logistic regression.
+  </p>
+
+  <p><strong>Reference used for review:</strong><br>
+    altaf-ali.github.io/ISLR/chapter3/solutions.html
+  </p>
+
+  <hr>
+
+  <h2>2. Load the Dataset</h2>
+  <p>
+    The TEDS 2016 dataset was loaded using the <code>haven</code> package and the
+    <code>read_stata()</code> function.
+  </p>
+
+  <pre><code>library(haven)
+
+TEDS_2016 &lt;- read_stata("https://raw.githubusercontent.com/datageneration/home/master/DataProgramming/data/TEDS_2016.dta")</code></pre>
+
+  <p>
+    The dataset contains survey responses related to voting behavior, demographics, and political attitudes.
+  </p>
+
+  <hr>
+
+  <h2>3. Create a Regression Plot Function</h2>
+  <p>
+    A custom function called <code>regplot</code> was created to visualize the relationship between two variables using a regression line.
+  </p>
+
+  <pre><code>regplot=function(x,y){
+  fit=lm(y~x)
+  plot(x,y)
+  abline(fit,col="red")
+}</code></pre>
+
+  <p>This function:</p>
+  <ul>
+    <li>Fits a linear regression model using <code>lm()</code></li>
+    <li>Creates a scatter plot of the data</li>
+    <li>Adds a regression line using <code>abline()</code></li>
+  </ul>
+
+  <hr>
+
+  <h2>4. Run Regression Plots</h2>
+  <p>
+    The regression plot function was applied using the dependent variable and three independent variables.
+  </p>
+
+  <h3>a. Age</h3>
+  <pre><code>regplot(TEDS_2016$age, TEDS_2016$votetsai)</code></pre>
+  <p>This plot examines the relationship between age and vote choice.</p>
+
+  <h3>b. Education</h3>
+  <pre><code>regplot(TEDS_2016$edu, TEDS_2016$votetsai)</code></pre>
+  <p>This plot evaluates how education level relates to voting behavior.</p>
+
+  <h3>c. Income</h3>
+  <pre><code>regplot(TEDS_2016$income, TEDS_2016$votetsai)</code></pre>
+  <p>This plot explores the relationship between income level and vote choice.</p>
+
+  <hr>
+
+  <h2>5. What is the Problem?</h2>
+  <p>
+    The main problem is that the dependent variable (vote choice) is categorical, not continuous.
+  </p>
+
+  <p>In this dataset, the dependent variable <code>votetsai</code> contains two categories:</p>
+  <ul>
+    <li>0 = Other candidate</li>
+    <li>1 = Tsai</li>
+  </ul>
+
+  <p>
+    Because linear regression assumes a continuous dependent variable, applying a standard regression
+    line is not ideal for predicting a binary outcome.
+  </p>
+
+  <p>
+    The scatterplots also show that the dependent variable only takes two values (0 and 1),
+    which limits the usefulness of a linear regression line.
+  </p>
+
+  <hr>
+
+  <h2>6. Why Does This Problem Occur?</h2>
+  <p>Linear regression models assume:</p>
+  <ul>
+    <li>The dependent variable is continuous</li>
+    <li>The relationship between variables is linear</li>
+    <li>Errors are normally distributed</li>
+  </ul>
+
+  <p>
+    However, when the dependent variable is binary, the predicted values from linear regression can
+    fall outside the valid range (less than 0 or greater than 1). This makes the model unsuitable
+    for classification problems.
+  </p>
+
+  <hr>
+
+  <h2>7. How Can Prediction Be Improved?</h2>
+  <p>
+    Prediction of the dependent variable can be improved by using classification models instead of linear regression.
+  </p>
+
+  <p>Better alternatives include:</p>
+  <ol>
+    <li>
+      <strong>Logistic Regression</strong>
+      <ul>
+        <li>Designed for binary dependent variables</li>
+        <li>Predicts probabilities between 0 and 1</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Decision Trees</strong>
+      <ul>
+        <li>Captures non-linear relationships</li>
+        <li>Easy to interpret</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Random Forest</strong>
+      <ul>
+        <li>Combines many decision trees</li>
+        <li>Improves prediction accuracy</li>
+      </ul>
+    </li>
+  </ol>
+
+  <p>
+    In this analysis, three models were tested and compared. The results show that Random Forest achieved
+    the highest prediction accuracy, followed by logistic regression and decision trees.
+  </p>
+
+  <h3>Figure 1: Comparison of prediction accuracy across machine learning models</h3>
+  <p class="figure-note">
+    Random Forest provides the highest accuracy.
+  </p>
+
+  <p>
+    The above figure shows the comparison of model performance.
+  </p>
+
+  <p>
+    The results indicate that ensemble machine learning methods such as Random Forest can provide
+    better predictive performance than simple linear models when dealing with categorical outcomes.
+  </p>
+
+  <hr>
+
+  <h2>Conclusion</h2>
+  <p>
+    This exercise demonstrates that although linear regression can be used to visualize relationships,
+    it is not suitable for predicting a binary dependent variable. Because the outcome variable in this
+    dataset has only two categories, classification models provide better predictive performance.
+    Logistic regression, decision trees, and random forests were applied, and the results show that
+    the Random Forest model achieved the highest prediction accuracy. This suggests that ensemble
+    machine learning methods can improve prediction performance when modeling categorical outcomes.
+  </p>
+
+  <hr>
+
+  <h2>R Code</h2>
+  <pre><code># ============================================================================
+# Workshop: Machine Learning with Survey Data (TEDS 2016)
+# EPPS 6323 Knowledge Mining
+# Karl Ho, University of Texas at Dallas
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# 0. Setup: Install (if needed) and Load Packages
+# ----------------------------------------------------------------------------
+
+required_pkgs &lt;- c("haven","tidyverse","GGally","cluster",
+                   "rpart","rpart.plot","randomForest","caret","e1071")
+
+installed &lt;- rownames(installed.packages())
+
+for(p in required_pkgs){
+  if(!(p %in% installed)) install.packages(p)
+}
+
+library(haven)
+library(tidyverse)
+library(GGally)
+library(cluster)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(caret)
+library(e1071)
+
+# ----------------------------------------------------------------------------
+# Load Data
+# ----------------------------------------------------------------------------
+
+TEDS_2016 &lt;- read_stata(
+"https://raw.githubusercontent.com/datageneration/home/master/DataProgramming/data/TEDS_2016.dta"
+)
+
+# ============================================================================
+# PART I: EXPLORATORY DATA ANALYSIS
+# ============================================================================
+
+# Data overview
+dim(TEDS_2016)
+names(TEDS_2016)
+summary(TEDS_2016)
+
+# Missing values
+TEDS_2016 %&gt;%
+  summarise(across(everything(), ~sum(is.na(.)))) %&gt;%
+  pivot_longer(everything(), names_to="variable", values_to="n_missing") %&gt;%
+  filter(n_missing &gt; 0) %&gt;%
+  arrange(desc(n_missing))
+
+# Missing value plot
+TEDS_2016 %&gt;%
+  summarise(across(everything(), ~sum(is.na(.)))) %&gt;%
+  pivot_longer(everything(), names_to="variable", values_to="n_missing") %&gt;%
+  filter(n_missing &gt; 0) %&gt;%
+  ggplot(aes(x=reorder(variable,n_missing), y=n_missing)) +
+  geom_col(fill="steelblue") +
+  coord_flip() +
+  labs(title="Missing Values by Variable", x=NULL, y="Count") +
+  theme_minimal()
+
+# ----------------------------------------------------------------------------
+# Recode variables
+# ----------------------------------------------------------------------------
+
+teds &lt;- TEDS_2016 %&gt;%
+  mutate(
+    vote = factor(votetsai, levels=c(0,1), labels=c("Other","Tsai")),
+    gender = factor(female, levels=c(0,1), labels=c("Male","Female")),
+    Tondu = as.factor(Tondu),
+    Party = as.factor(Party)
+  ) %&gt;%
+  select(vote, gender, age, edu, income,
+         Taiwanese, Econ_worse, Tondu, Party, DPP) %&gt;%
+  drop_na()
+
+glimpse(teds)
+
+# ----------------------------------------------------------------------------
+# Visualization
+# ----------------------------------------------------------------------------
+
+# Vote distribution
+ggplot(teds, aes(x=vote, fill=vote)) +
+  geom_bar() +
+  theme_minimal()
+
+# Age distribution
+ggplot(teds, aes(x=age)) +
+  geom_histogram(binwidth=5, fill="steelblue", color="white") +
+  theme_minimal()
+
+# Vote by gender
+ggplot(teds, aes(x=gender, fill=vote)) +
+  geom_bar(position="fill") +
+  theme_minimal()
+
+# Age by vote
+ggplot(teds, aes(x=vote, y=age, fill=vote)) +
+  geom_boxplot() +
+  theme_minimal()
+
+# ----------------------------------------------------------------------------
+# Correlation matrix
+# ----------------------------------------------------------------------------
+
+teds %&gt;%
+  select(age,edu,income,Taiwanese,Econ_worse,DPP) %&gt;%
+  cor(use="complete.obs") %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column("var1") %&gt;%
+  pivot_longer(-var1,names_to="var2",values_to="cor") %&gt;%
+  ggplot(aes(var1,var2,fill=cor)) +
+  geom_tile() +
+  geom_text(aes(label=round(cor,2))) +
+  scale_fill_gradient2(low="red",mid="white",high="blue") +
+  theme_minimal()
+
+# ----------------------------------------------------------------------------
+# Pairs plot
+# ----------------------------------------------------------------------------
+
+teds %&gt;%
+  select(age,edu,income,Taiwanese,Econ_worse,vote) %&gt;%
+  ggpairs(aes(color=vote, alpha=0.5))
+
+# ============================================================================
+# PART II: UNSUPERVISED LEARNING (K-means)
+# ============================================================================
+
+teds_numeric &lt;- teds %&gt;%
+  select(age,edu,income,Taiwanese,Econ_worse,DPP) %&gt;%
+  scale() %&gt;%
+  as.data.frame()
+
+# Elbow method
+wss &lt;- numeric(10)
+
+for(i in 1:10){
+  wss[i] &lt;- kmeans(teds_numeric, centers=i, nstart=10)$tot.withinss
+}
+
+plot(1:10, wss, type="b", pch=19,
+     xlab="Number of Clusters (k)",
+     ylab="Within-cluster Sum of Squares",
+     main="Elbow Method")
+
+# K-means clustering
+set.seed(6323)
+km_result &lt;- kmeans(teds_numeric, centers=3, nstart=25)
+
+table(km_result$cluster)
+
+# Cluster profiling
+teds$cluster &lt;- as.factor(km_result$cluster)
+
+teds %&gt;%
+  group_by(cluster) %&gt;%
+  summarise(
+    n=n(),
+    mean_age=mean(age),
+    mean_edu=mean(edu),
+    mean_income=mean(income)
+  )
+
+# ============================================================================
+# PART III: SUPERVISED LEARNING
+# ============================================================================
+
+set.seed(6323)
+
+train_index &lt;- createDataPartition(teds$vote, p=0.7, list=FALSE)
+
+train_data &lt;- teds[train_index,] %&gt;% select(-cluster)
+test_data  &lt;- teds[-train_index,] %&gt;% select(-cluster)
+
+# ----------------------------------------------------------------------------
+# Logistic Regression
+# ----------------------------------------------------------------------------
+
+logit_model &lt;- glm(vote ~ age + gender + edu + income +
+                     Taiwanese + Econ_worse + DPP,
+                   data=train_data,
+                   family=binomial)
+
+summary(logit_model)
+
+logit_probs &lt;- predict(logit_model, newdata=test_data, type="response")
+
+logit_pred &lt;- ifelse(logit_probs &gt; 0.5, "Tsai", "Other")
+logit_pred &lt;- factor(logit_pred, levels=c("Other","Tsai"))
+
+confusionMatrix(logit_pred, test_data$vote)
+
+# ----------------------------------------------------------------------------
+# Decision Tree
+# ----------------------------------------------------------------------------
+
+tree_model &lt;- rpart(vote ~ age + gender + edu + income +
+                      Taiwanese + Econ_worse + DPP,
+                    data=train_data,
+                    method="class")
+
+rpart.plot(tree_model)
+
+tree_pred &lt;- predict(tree_model, newdata=test_data, type="class")
+
+confusionMatrix(tree_pred, test_data$vote)
+
+# ----------------------------------------------------------------------------
+# Random Forest
+# ----------------------------------------------------------------------------
+
+set.seed(6323)
+
+rf_model &lt;- randomForest(vote ~ age + gender + edu + income +
+                           Taiwanese + Econ_worse + DPP,
+                         data=train_data,
+                         ntree=500,
+                         importance=TRUE)
+
+rf_pred &lt;- predict(rf_model, newdata=test_data)
+
+confusionMatrix(rf_pred, test_data$vote)
+
+# ----------------------------------------------------------------------------
+# Variable Importance
+# ----------------------------------------------------------------------------
+
+importance_df &lt;- as.data.frame(importance(rf_model)) %&gt;%
+  rownames_to_column("variable")
+
+ggplot(importance_df,
+       aes(x=reorder(variable, MeanDecreaseGini),
+           y=MeanDecreaseGini)) +
+  geom_col(fill="steelblue") +
+  coord_flip() +
+  theme_minimal()
+
+# ----------------------------------------------------------------------------
+# Model Comparison
+# ----------------------------------------------------------------------------
+
+results &lt;- tibble(
+  Model=c("Logistic Regression","Decision Tree","Random Forest"),
+  Accuracy=c(
+    confusionMatrix(logit_pred, test_data$vote)$overall["Accuracy"],
+    confusionMatrix(tree_pred, test_data$vote)$overall["Accuracy"],
+    confusionMatrix(rf_pred, test_data$vote)$overall["Accuracy"]
+  )
+)
+
+print(results)
+
+ggplot(results,
+       aes(x=reorder(Model,Accuracy),
+           y=Accuracy,
+           fill=Model)) +
+  geom_col() +
+  coord_flip() +
+  labs(title="Model Comparison", x=NULL, y="Accuracy") +
+  theme_minimal()</code></pre>
 
 </body>
 </html>
