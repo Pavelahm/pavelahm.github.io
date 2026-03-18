@@ -1,41 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Reflection 5</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflection 5</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+      background: #fff;
+    }
+
+    h1, h2 {
+      color: #111;
+    }
+
+    .figure-box {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .caption {
+      font-style: italic;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .diagram-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .node {
+      border: 2px solid #333;
+      padding: 14px 18px;
+      border-radius: 10px;
+      background: #f7f7f7;
+      font-weight: bold;
+      min-width: 220px;
+      text-align: center;
+    }
+
+    .arrow {
+      font-size: 28px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Weekly Reflection 5</h1>
+  <h1>Reflection 5</h1>
 
-<h2>a. Text Mining vs Close Reading</h2>
-<p>
-Text mining helps identify patterns in large datasets that are difficult to detect through
-close reading. It can reveal trends, sentiment, and relationships across thousands of documents.
-However, it may miss context, tone, and deeper meanings that human interpretation can capture.
-</p>
+  <h2>a. Prediction vs. Explanation</h2>
+  <p>
+    Sometimes it is enough to know what will happen, even if we do not fully understand why.
+    For example, a model may predict which areas will have higher crime rates. This prediction
+    can help police prepare resources. But if policymakers want to reduce crime in the long term,
+    they need to understand why crime happens, such as poverty, unemployment, or lack of education.
+  </p>
 
-<h2>b. NLP and LLM in Research</h2>
-<p>
-NLP and LLM can help in analyzing large text datasets, summarizing literature, and generating
-insights. For example, they can classify policy documents or extract themes from survey responses.
-They can also assist in writing and coding tasks.
-</p>
+  <h2>b. Simple Causal Diagram and Confounders</h2>
+  <p>
+    In my research area, one relationship could be: Employee engagement → Organizational performance.
+    The following simple causal diagram shows employee engagement affecting performance.
+  </p>
 
-<h2>c. Limitations and Solutions</h2>
-<p>
-Limitations include bias, lack of transparency, and potential errors. LLMs may generate incorrect
-or misleading information. These issues can be reduced by validating outputs, combining methods,
-and using human review.
-</p>
+  <div class="figure-box">
+    <div class="diagram-wrap">
+      <div class="node">Employee Engagement</div>
+      <div class="arrow">→</div>
+      <div class="node">Organizational Performance</div>
+    </div>
+    <div class="caption">
+      Figure: Causal Relationship between Employee Engagement and Organizational Performance
+    </div>
+  </div>
 
-<h2>d. AI for Research Guide</h2>
-<ul>
-<li>Always verify AI-generated results</li>
-<li>Use AI as a support tool, not a replacement</li>
-<li>Be aware of bias in datasets</li>
-<li>Ensure ethical use of data</li>
-<li>Document methods clearly</li>
-</ul>
+  <p>
+    However, there may be confounders such as leadership quality, organizational culture, and resources.
+    These factors can influence both engagement and performance.
+  </p>
+
+  <p>
+    To distinguish a causal claim from a predictive association, we need to control for these confounders
+    using research design or statistical methods. If the relationship still holds after controlling for them,
+    we can be more confident that engagement actually causes better performance, not just predicts it.
+  </p>
 
 </body>
 </html>
