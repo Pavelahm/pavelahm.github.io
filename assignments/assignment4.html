@@ -55,6 +55,10 @@ th, td {
 This assignment applies the <b>quanteda</b> package in R to perform text analytics on US presidential inaugural speeches and Department of Defense (DOD) reports. It includes corpus creation, tokenization, DFM construction, and Wordfish scaling.
 </p>
 
+<p>
+The workflow includes corpus creation, tokenization, construction of document-feature matrices (DFM), and scaling methods such as <b>Wordfish</b> to estimate document positions along latent rhetorical dimensions.
+</p>
+
 <h2>2. Analysis of US Presidential Inaugural Speeches</h2>
 
 <h3>2.1 Data and Method</h3>
@@ -62,8 +66,13 @@ This assignment applies the <b>quanteda</b> package in R to perform text analyti
 <li>Removed punctuation, numbers, symbols, URLs</li>
 <li>Converted to lowercase</li>
 <li>Removed stopwords</li>
+<li>Removed common functional words (will, can, must, shall, may, one, two, three)</li>
 <li>Trimmed DFM (min 2 docs, max 80%)</li>
 </ul>
+
+<p>
+The built-in <b>data_corpus_inaugural</b> from quanteda was used, subset to include speeches from 2000–2025 (7 speeches).
+</p>
 
 <h3>2.2 Top Words</h3>
 
@@ -81,10 +90,48 @@ This assignment applies the <b>quanteda</b> package in R to perform text analyti
 <tr><td>10</td><td>bring</td><td>15</td></tr>
 </table>
 
+<p>
+These words indicate a strong emphasis on <b>democratic values</b>, <b>national identity</b>, and <b>collective responsibility</b>.
+</p>
+
+<h3>2.3 Similarities and Differences</h3>
+
+<p><b>Similarities across speeches:</b></p>
+<ul>
+<li>National unity and public responsibility</li>
+<li>Democratic values and peaceful transfer of power</li>
+<li>References to freedom and liberty</li>
+</ul>
+
+<p><b>Differences:</b></p>
+<ul>
+<li>Trump's speeches show distinctive rhetorical patterns (negative theta values)</li>
+<li>Obama's speeches emphasize traditional/internationalist themes</li>
+<li>Bush's speeches cluster together with positive theta values</li>
+<li>Variation reflects historical context and political priorities</li>
+</ul>
+
 <h2>3. What is Wordfish?</h2>
 <p>
 Wordfish is an unsupervised scaling method that estimates document positions based on word frequency distributions.
 </p>
+
+<p><b>Key Features:</b></p>
+<ul>
+<li>Does not require labeled data</li>
+<li>Identifies hidden patterns in text</li>
+<li>Assigns each document a numerical position (theta)</li>
+<li>Helps compare documents based on language use</li>
+<li>Widely used in political text analysis</li>
+</ul>
+
+<p><b>How it works:</b></p>
+<ul>
+<li>Assumes a Poisson distribution for word counts</li>
+<li>Estimates document positions (theta)</li>
+<li>Estimates feature parameters (beta)</li>
+<li>Estimates feature fixed effects (psi)</li>
+</ul>
 
 <h2>4. Wordfish Results - Inaugural Speeches</h2>
 
@@ -94,15 +141,22 @@ Wordfish is an unsupervised scaling method that estimates document positions bas
 </div>
 
 <table>
-<tr><th>President</th><th>Year</th><th>Theta</th></tr>
-<tr><td>Trump</td><td>2017</td><td>-1.323</td></tr>
-<tr><td>Trump</td><td>2025</td><td>-1.307</td></tr>
-<tr><td>Biden</td><td>2021</td><td>-0.080</td></tr>
-<tr><td>Obama</td><td>2009</td><td>0.053</td></tr>
-<tr><td>Obama</td><td>2013</td><td>0.540</td></tr>
-<tr><td>Bush</td><td>2001</td><td>1.044</td></tr>
-<tr><td>Bush</td><td>2005</td><td>1.073</td></tr>
+<tr><th>President</th><th>Year</th><th>Theta</th><th>Standard Error</th></tr>
+<tr><td>Trump</td><td>2017</td><td>-1.323</td><td>0.058</td></tr>
+<tr><td>Trump</td><td>2025</td><td>-1.307</td><td>0.047</td></tr>
+<tr><td>Biden</td><td>2021</td><td>-0.080</td><td>0.054</td></tr>
+<tr><td>Obama</td><td>2009</td><td>0.053</td><td>0.052</td></tr>
+<tr><td>Obama</td><td>2013</td><td>0.540</td><td>0.050</td></tr>
+<tr><td>Bush</td><td>2001</td><td>1.044</td><td>0.052</td></tr>
+<tr><td>Bush</td><td>2005</td><td>1.073</td><td>0.045</td></tr>
 </table>
+
+<p><b>Model Summary:</b></p>
+<ul>
+<li>Direction fixed: Trump 2017 (negative) vs Obama 2009 (positive)</li>
+<li>Number of documents: 7</li>
+<li>Number of features: 851 after trimming</li>
+</ul>
 
 <h2>5. Interpretation</h2>
 
@@ -111,14 +165,29 @@ Wordfish is an unsupervised scaling method that estimates document positions bas
 <div class="caption">Figure 2: Theta Trends Over Time</div>
 </div>
 
+<p><b>Key Findings:</b></p>
+<table>
+<tr><th>Finding</th><th>Value</th><th>Interpretation</th></tr>
+<tr><td>Most positive</td><td>Bush 2005</td><td>Traditional rhetoric</td></tr>
+<tr><td>Most negative</td><td>Trump 2017</td><td>Populist rhetoric</td></tr>
+<tr><td>Range</td><td>2.395</td><td>Wide variation</td></tr>
+<tr><td>Correlation</td><td>-0.828</td><td>More traditional over time</td></tr>
+</table>
+
+<p><b>Rhetorical Patterns:</b></p>
 <ul>
-<li>Trump → populist (negative)</li>
-<li>Obama → moderate positive</li>
-<li>Biden → centrist</li>
-<li>Bush → traditional positive</li>
+<li>Trump (2017, 2025): distinctive populist style</li>
+<li>Obama (2009, 2013): internationalist tone</li>
+<li>Biden (2021): centrist language</li>
+<li>Bush (2001, 2005): traditional rhetoric</li>
 </ul>
 
 <h2>6. DOD Reports Analysis</h2>
+
+<h3>6.1 Data Description</h3>
+<p>
+The DOD reports analysis included 12 documents from 2001–2023 covering multiple defense secretaries (Rumsfeld, Gates, Panetta, Hagel, Mattis, Esper, Austin).
+</p>
 
 <h3>Top Words</h3>
 
@@ -131,6 +200,10 @@ Wordfish is an unsupervised scaling method that estimates document positions bas
 <tr><td>5</td><td>security</td><td>3</td></tr>
 </table>
 
+<p>
+These words reflect a strong focus on military strategy, operations, and national security.
+</p>
+
 <h3>Wordfish Results</h3>
 
 <div class="figure">
@@ -138,11 +211,13 @@ Wordfish is an unsupervised scaling method that estimates document positions bas
 <div class="caption">Figure 3: Wordfish Theta Positions for DOD Reports</div>
 </div>
 
+<p><b>Key Findings:</b></p>
 <table>
-<tr><th>Year</th><th>Secretary</th><th>Theta</th></tr>
-<tr><td>2001</td><td>Rumsfeld</td><td>-0.888</td></tr>
-<tr><td>2017</td><td>Mattis</td><td>1.320</td></tr>
-<tr><td>2023</td><td>Austin</td><td>1.520</td></tr>
+<tr><th>Finding</th><th>Value</th><th>Interpretation</th></tr>
+<tr><td>Most positive</td><td>Austin 2023</td><td>Hawkish</td></tr>
+<tr><td>Most negative</td><td>Esper 2019</td><td>Cautious</td></tr>
+<tr><td>Range</td><td>2.950</td><td>Very wide</td></tr>
+<tr><td>Correlation</td><td>+0.407</td><td>Increasingly hawkish</td></tr>
 </table>
 
 <h2>7. Comparative Analysis</h2>
@@ -154,10 +229,25 @@ Wordfish is an unsupervised scaling method that estimates document positions bas
 <tr><td>Trend</td><td>Traditional</td><td>Hawkish</td></tr>
 </table>
 
+<p>
+No common themes were found between the two corpora, indicating distinct vocabularies.
+</p>
+
+<h2>8. How to Compare Positions Using Wordfish and Scaling Methods</h2>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Best for</th></tr>
+<tr><td>Wordfish</td><td>Unsupervised scaling</td><td>Political texts</td></tr>
+<tr><td>Wordscores</td><td>Supervised scaling</td><td>Known references</td></tr>
+<tr><td>Cosine Similarity</td><td>Vector comparison</td><td>Similarity analysis</td></tr>
+<tr><td>t-SNE / UMAP</td><td>Dimensionality reduction</td><td>Visualization</td></tr>
+</table>
+
 <h2>8. Conclusion</h2>
 <p>
-Wordfish effectively captures rhetorical differences across domains without labeled data.
+Wordfish effectively captures rhetorical differences across domains without labeled data. Scaling methods provide objective and reproducible ways to compare texts across time and domains.
 </p>
+
 
 <h2>9. Appendix (Code)</h2>
 
@@ -617,6 +707,9 @@ cat(&quot;=========================================\n&quot;)
 cat(&quot;\nSESSION INFORMATION:\n&quot;)
 sessionInfo()
 </code></pre>
+
+</body>
+</html>
 
 </body>
 </html>
