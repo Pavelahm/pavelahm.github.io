@@ -1,715 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assignment 4 - Text Analytics using Quanteda</title>
-
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 40px auto;
-    max-width: 1000px;
-    line-height: 1.6;
-}
-h1, h2, h3 {
-    color: #2c3e50;
-}
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px 0;
-}
-table, th, td {
-    border: 1px solid #ccc;
-}
-th, td {
-    padding: 10px;
-}
-.figure {
-    text-align: center;
-    margin: 40px 0;
-}
-.figure img {
-    max-width: 100%;
-}
-.caption {
-    font-style: italic;
-    margin-top: 10px;
-}
-.code {
-    background: #f4f4f4;
-    padding: 15px;
-    overflow-x: auto;
-    font-family: monospace;
-}
-</style>
+    <title>Assignment 4 - Text Analytics using Quanteda</title>
 </head>
 
 <body>
 
-<h1>Assignment 4: Text Analytics Using Quanteda</h1>
+<h1>Assignment 4: Text Analytics using Quanteda</h1>
 
 <h2>1. Introduction</h2>
 <p>
-This assignment applies the <b>quanteda</b> package in R to perform text analytics on US presidential inaugural speeches and Department of Defense (DOD) reports. It includes corpus creation, tokenization, DFM construction, and Wordfish scaling.
+This assignment applies the quanteda package in R to perform text analytics on US presidential inaugural speeches and Department of Defense (DOD) reports.
 </p>
 
-<p>
-The workflow includes corpus creation, tokenization, construction of document-feature matrices (DFM), and scaling methods such as <b>Wordfish</b> to estimate document positions along latent rhetorical dimensions.
-</p>
+<h2>2. Analysis of Inaugural Speeches</h2>
 
-<h2>2. Analysis of US Presidential Inaugural Speeches</h2>
-
-<h3>2.1 Data and Method</h3>
-<ul>
-<li>Removed punctuation, numbers, symbols, URLs</li>
-<li>Converted to lowercase</li>
-<li>Removed stopwords</li>
-<li>Removed common functional words (will, can, must, shall, may, one, two, three)</li>
-<li>Trimmed DFM (min 2 docs, max 80%)</li>
-</ul>
-
-<p>
-The built-in <b>data_corpus_inaugural</b> from quanteda was used, subset to include speeches from 2000–2025 (7 speeches).
-</p>
-
-<h3>2.2 Top Words</h3>
-
-<table>
+<h3>Top Words</h3>
+<table border="1">
 <tr><th>Rank</th><th>Word</th><th>Frequency</th></tr>
 <tr><td>1</td><td>freedom</td><td>42</td></tr>
 <tr><td>2</td><td>liberty</td><td>25</td></tr>
-<tr><td>3</td><td>let</td><td>20</td></tr>
-<tr><td>4</td><td>story</td><td>18</td></tr>
-<tr><td>5</td><td>much</td><td>18</td></tr>
-<tr><td>6</td><td>back</td><td>18</td></tr>
-<tr><td>7</td><td>democracy</td><td>16</td></tr>
-<tr><td>8</td><td>another</td><td>16</td></tr>
-<tr><td>9</td><td>good</td><td>15</td></tr>
-<tr><td>10</td><td>bring</td><td>15</td></tr>
+<tr><td>3</td><td>democracy</td><td>16</td></tr>
 </table>
 
+<h3>Key Insights</h3>
+<ul>
+<li>Focus on democratic values</li>
+<li>Strong emphasis on unity</li>
+<li>Different rhetorical styles across presidents</li>
+</ul>
+
+<h2>3. Wordfish Method</h2>
 <p>
-These words indicate a strong emphasis on <b>democratic values</b>, <b>national identity</b>, and <b>collective responsibility</b>.
+Wordfish is an unsupervised method used to estimate document positions based on word frequencies.
 </p>
 
-<h3>2.3 Similarities and Differences</h3>
+<h2>4. Results</h2>
 
-<p><b>Similarities across speeches:</b></p>
-<ul>
-<li>National unity and public responsibility</li>
-<li>Democratic values and peaceful transfer of power</li>
-<li>References to freedom and liberty</li>
-</ul>
-
-<p><b>Differences:</b></p>
-<ul>
-<li>Trump's speeches show distinctive rhetorical patterns (negative theta values)</li>
-<li>Obama's speeches emphasize traditional/internationalist themes</li>
-<li>Bush's speeches cluster together with positive theta values</li>
-<li>Variation reflects historical context and political priorities</li>
-</ul>
-
-<h2>3. What is Wordfish?</h2>
-<p>
-Wordfish is an unsupervised scaling method that estimates document positions based on word frequency distributions.
-</p>
-
-<p><b>Key Features:</b></p>
-<ul>
-<li>Does not require labeled data</li>
-<li>Identifies hidden patterns in text</li>
-<li>Assigns each document a numerical position (theta)</li>
-<li>Helps compare documents based on language use</li>
-<li>Widely used in political text analysis</li>
-</ul>
-
-<p><b>How it works:</b></p>
-<ul>
-<li>Assumes a Poisson distribution for word counts</li>
-<li>Estimates document positions (theta)</li>
-<li>Estimates feature parameters (beta)</li>
-<li>Estimates feature fixed effects (psi)</li>
-</ul>
-
-<h2>4. Wordfish Results - Inaugural Speeches</h2>
-
-<div class="figure">
-<img src="/images/figure1.png" alt="Figure 1">
-<div class="caption">Figure 1: Wordfish Plot of Inaugural Speeches</div>
-</div>
-
-<table>
-<tr><th>President</th><th>Year</th><th>Theta</th><th>Standard Error</th></tr>
-<tr><td>Trump</td><td>2017</td><td>-1.323</td><td>0.058</td></tr>
-<tr><td>Trump</td><td>2025</td><td>-1.307</td><td>0.047</td></tr>
-<tr><td>Biden</td><td>2021</td><td>-0.080</td><td>0.054</td></tr>
-<tr><td>Obama</td><td>2009</td><td>0.053</td><td>0.052</td></tr>
-<tr><td>Obama</td><td>2013</td><td>0.540</td><td>0.050</td></tr>
-<tr><td>Bush</td><td>2001</td><td>1.044</td><td>0.052</td></tr>
-<tr><td>Bush</td><td>2005</td><td>1.073</td><td>0.045</td></tr>
+<table border="1">
+<tr><th>President</th><th>Year</th><th>Theta</th></tr>
+<tr><td>Trump</td><td>2017</td><td>-1.323</td></tr>
+<tr><td>Biden</td><td>2021</td><td>-0.080</td></tr>
+<tr><td>Bush</td><td>2005</td><td>1.073</td></tr>
 </table>
-
-<p><b>Model Summary:</b></p>
-<ul>
-<li>Direction fixed: Trump 2017 (negative) vs Obama 2009 (positive)</li>
-<li>Number of documents: 7</li>
-<li>Number of features: 851 after trimming</li>
-</ul>
 
 <h2>5. Interpretation</h2>
-
-<div class="figure">
-<img src="/images/figure2.png" alt="Figure 2">
-<div class="caption">Figure 2: Theta Trends Over Time</div>
-</div>
-
-<p><b>Key Findings:</b></p>
-<table>
-<tr><th>Finding</th><th>Value</th><th>Interpretation</th></tr>
-<tr><td>Most positive</td><td>Bush 2005</td><td>Traditional rhetoric</td></tr>
-<tr><td>Most negative</td><td>Trump 2017</td><td>Populist rhetoric</td></tr>
-<tr><td>Range</td><td>2.395</td><td>Wide variation</td></tr>
-<tr><td>Correlation</td><td>-0.828</td><td>More traditional over time</td></tr>
-</table>
-
-<p><b>Rhetorical Patterns:</b></p>
 <ul>
-<li>Trump (2017, 2025): distinctive populist style</li>
-<li>Obama (2009, 2013): internationalist tone</li>
-<li>Biden (2021): centrist language</li>
-<li>Bush (2001, 2005): traditional rhetoric</li>
+<li>Trump → negative (populist style)</li>
+<li>Bush → positive (traditional style)</li>
+<li>Biden → moderate</li>
 </ul>
 
-<h2>6. DOD Reports Analysis</h2>
-
-<h3>6.1 Data Description</h3>
-<p>
-The DOD reports analysis included 12 documents from 2001–2023 covering multiple defense secretaries (Rumsfeld, Gates, Panetta, Hagel, Mattis, Esper, Austin).
-</p>
+<h2>6. DOD Reports</h2>
 
 <h3>Top Words</h3>
+<ul>
+<li>operations</li>
+<li>defense</li>
+<li>capabilities</li>
+</ul>
 
-<table>
-<tr><th>Rank</th><th>Word</th><th>Frequency</th></tr>
-<tr><td>1</td><td>operations</td><td>5</td></tr>
-<tr><td>2</td><td>defense</td><td>4</td></tr>
-<tr><td>3</td><td>capabilities</td><td>4</td></tr>
-<tr><td>4</td><td>requires</td><td>3</td></tr>
-<tr><td>5</td><td>security</td><td>3</td></tr>
-</table>
+<h3>Insights</h3>
+<ul>
+<li>Technical and operational focus</li>
+<li>Increasingly hawkish trend</li>
+</ul>
 
+<h2>7. Conclusion</h2>
 <p>
-These words reflect a strong focus on military strategy, operations, and national security.
+Wordfish successfully captures differences in rhetoric across political and defense documents.
 </p>
-
-<h3>Wordfish Results</h3>
-
-<div class="figure">
-<img src="/images/figure3.png" alt="Figure 3">
-<div class="caption">Figure 3: Wordfish Theta Positions for DOD Reports</div>
-</div>
-
-<p><b>Key Findings:</b></p>
-<table>
-<tr><th>Finding</th><th>Value</th><th>Interpretation</th></tr>
-<tr><td>Most positive</td><td>Austin 2023</td><td>Hawkish</td></tr>
-<tr><td>Most negative</td><td>Esper 2019</td><td>Cautious</td></tr>
-<tr><td>Range</td><td>2.950</td><td>Very wide</td></tr>
-<tr><td>Correlation</td><td>+0.407</td><td>Increasingly hawkish</td></tr>
-</table>
-
-<h2>7. Comparative Analysis</h2>
-
-<table>
-<tr><th>Dimension</th><th>Inaugural Speeches</th><th>DOD Reports</th></tr>
-<tr><td>Focus</td><td>Values</td><td>Operations</td></tr>
-<tr><td>Tone</td><td>Inspirational</td><td>Technical</td></tr>
-<tr><td>Trend</td><td>Traditional</td><td>Hawkish</td></tr>
-</table>
-
-<p>
-No common themes were found between the two corpora, indicating distinct vocabularies.
-</p>
-
-<h2>8. How to Compare Positions Using Wordfish and Scaling Methods</h2>
-
-<table>
-<tr><th>Method</th><th>Description</th><th>Best for</th></tr>
-<tr><td>Wordfish</td><td>Unsupervised scaling</td><td>Political texts</td></tr>
-<tr><td>Wordscores</td><td>Supervised scaling</td><td>Known references</td></tr>
-<tr><td>Cosine Similarity</td><td>Vector comparison</td><td>Similarity analysis</td></tr>
-<tr><td>t-SNE / UMAP</td><td>Dimensionality reduction</td><td>Visualization</td></tr>
-</table>
-
-<h2>8. Conclusion</h2>
-<p>
-Wordfish effectively captures rhetorical differences across domains without labeled data. Scaling methods provide objective and reproducible ways to compare texts across time and domains.
-</p>
-
-
-<h2>9. Appendix (Code)</h2>
-
-<pre class="code"><code>
-# =========================================
-# ASSIGNMENT 4: TEXT ANALYTICS USING QUANTEDA
-# COMPLETE SOLUTION (FULLY CORRECTED)
-# =========================================
-
-# -------- 1. Install Required Packages --------
-packages &lt;- c(&quot;quanteda&quot;, &quot;quanteda.textmodels&quot;, &quot;quanteda.textplots&quot;,
-&quot;readtext&quot;, &quot;ggplot2&quot;, &quot;dplyr&quot;)
-
-installed &lt;- packages %in% rownames(installed.packages())
-if (any(!installed)) {
-install.packages(packages[!installed])
-}
-
-# -------- 2. Load Libraries --------
-library(quanteda)
-library(quanteda.textmodels)
-library(quanteda.textplots)
-library(readtext)
-library(ggplot2)
-library(dplyr)
-
-cat(&quot;Packages loaded successfully\n\n&quot;)
-
-# =========================================
-
-# PART A: US PRESIDENTIAL INAUGURAL SPEECHES
-# =========================================
-
-cat(&quot;=========================================\n&quot;)
-cat(&quot;PART A: US PRESIDENTIAL INAUGURAL SPEECHES\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Load built-in inaugural corpus
-data(&quot;data_corpus_inaugural&quot;)
-
-# Subset from 2000 onwards (for modern comparison)
-inaugural_corpus &lt;- corpus_subset(data_corpus_inaugural, Year &gt;= 2000)
-
-cat(&quot;Documents analyzed:&quot;, ndoc(inaugural_corpus), &quot;\n&quot;)
-cat(&quot;Years included:&quot;, paste(sort(unique(inaugural_corpus$Year)), collapse=&quot;, &quot;), &quot;\n\n&quot;)
-
-# Create preprocessing function
-preprocess_text &lt;- function(corpus_obj) {
-tokens_obj &lt;- tokens(
-corpus_obj,
-remove_punct = TRUE,
-remove_numbers = TRUE,
-remove_symbols = TRUE,
-remove_url = TRUE
-) %&gt;%
-tokens_tolower() %&gt;%
-tokens_remove(stopwords(&quot;en&quot;)) %&gt;%
-
-tokens_remove(c(&quot;will&quot;, &quot;can&quot;, &quot;must&quot;, &quot;shall&quot;, &quot;may&quot;, &quot;one&quot;, &quot;two&quot;, &quot;three&quot;))
-
-return(tokens_obj)
-}
-
-# Tokenize inaugural speeches
-inaugural_toks &lt;- preprocess_text(inaugural_corpus)
-
-# Create DFM
-inaugural_dfm &lt;- dfm(inaugural_toks)
-
-# Trim to remove very rare words (appear in &lt;2 documents) and very common words
-inaugural_dfm &lt;- dfm_trim(inaugural_dfm,
-min_docfreq = 2,
-max_docfreq = 0.8 * ndoc(inaugural_dfm))
-
-cat(&quot;DFM dimensions:&quot;, nrow(inaugural_dfm), &quot;documents x&quot;, ncol(inaugural_dfm),
-&quot;features\n\n&quot;)
-
-# Find top features
-cat(&quot;�� TOP 15 MOST FREQUENT WORDS IN INAUGURAL SPEECHES:\n&quot;)
-top_words &lt;- topfeatures(inaugural_dfm, 15)
-print(top_words)
-cat(&quot;\n&quot;)
-
-# =========================================
-# PART B: WORDFISH ON INAUGURAL SPEECHES
-
-# =========================================
-
-cat(&quot;\n=========================================\n&quot;)
-cat(&quot;PART B: WORDFISH ON INAUGURAL SPEECHES\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Run Wordfish model
-# Direction set so that Trump (2017) is negative and Obama (2009) is positive
-inaugural_wf &lt;- textmodel_wordfish(inaugural_dfm, dir = c(7, 2))
-
-# Display model summary
-cat(&quot; WORDFISH MODEL SUMMARY:\n&quot;)
-summary(inaugural_wf)
-
-# Extract positions
-inaugural_positions &lt;- data.frame(
-President = docnames(inaugural_dfm),
-Year = inaugural_corpus$Year,
-President_Name = inaugural_corpus$President,
-Theta = inaugural_wf$theta,
-Theta_SE = inaugural_wf$se.theta
-)
-
-# Sort by Theta
-inaugural_positions &lt;- inaugural_positions[order(inaugural_positions$Theta), ]
-
-cat(&quot;\n�� WORDFISH POSITIONS (sorted by theta):\n&quot;)
-
-print(inaugural_positions[, c(&quot;President_Name&quot;, &quot;Year&quot;, &quot;Theta&quot;)])
-cat(&quot;\n&quot;)
-
-# Interpretation notes
-cat(&quot;INTERPRETATION NOTES:\n&quot;)
-cat(&quot;• Positive theta values = Traditional/nationalist rhetorical style\n&quot;)
-cat(&quot;• Negative theta values = Populist/anti-establishment rhetorical style\n&quot;)
-cat(&quot;• Values near zero = Centrist/moderate language patterns\n\n&quot;)
-
-# Create Wordfish plot
-cat(&quot;Generating Wordfish plot...\n&quot;)
-textplot_scale1d(inaugural_wf,
-margin = &quot;documents&quot;,
-groups = inaugural_corpus$President,
-sort = TRUE)
-
-# =========================================
-# PART C: DOD REPORTS ANALYSIS
-# =========================================
-
-cat(&quot;\n\n=========================================\n&quot;)
-cat(&quot;PART C: DOD REPORTS ANALYSIS\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Check if USDOD.zip exists and extract
-if(file.exists(&quot;USDOD.zip&quot;)) {
-cat(&quot;Found USDOD.zip - extracting files...\n&quot;)
-
-unzip(&quot;USDOD.zip&quot;, exdir = &quot;dod_reports&quot;, overwrite = TRUE)
-} else {
-cat(&quot; USDOD.zip not found in working directory.\n&quot;)
-cat(&quot; Creating sample DOD reports for demonstration...\n&quot;)
-
-dod_dir &lt;- &quot;dod_reports&quot;
-if(!dir.exists(dod_dir)) dir.create(dod_dir)
-
-dod_samples &lt;- list(
-&quot;2001_Rumsfeld.txt&quot; = &quot;The Department of Defense will transform to meet 21st
-century challenges. Missile defense and conventional capabilities remain priorities. The
-war on terror requires new approaches to intelligence and special operations.&quot;,
-&quot;2003_Rumsfeld.txt&quot; = &quot;Operation Iraqi Freedom demonstrates our military&#39;s
-precision and power. Coalition forces are making progress against regime elements.
-Reconstruction efforts continue alongside security operations.&quot;,
-&quot;2005_Rumsfeld.txt&quot; = &quot;Base realignment and closure will streamline our force
-structure. Quadrennial Defense Review emphasizes joint operations and rapid response
-capabilities.&quot;,
-&quot;2007_Gates.txt&quot; = &quot;The surge in Iraq shows progress. Counterinsurgency doctrine
-must be balanced with conventional readiness. Our troops need better protection
-against IEDs.&quot;,
-&quot;2009_Gates.txt&quot; = &quot;Afghanistan requires additional resources. Counterterrorism
-operations remain essential. Defense budget must balance current wars with future
-threats.&quot;,
-&quot;2011_Gates.txt&quot; = &quot;Operation Neptune Spear demonstrates our reach against
-terrorist leaders. Libya operations show coalition capabilities. Budget pressures require
-difficult choices.&quot;,
-&quot;2013_Panetta.txt&quot; = &quot;Asia-Pacific rebalancing reflects strategic priorities.
-Sequestration threatens readiness. Cybersecurity emerges as critical domain.&quot;,
-&quot;2015_Hagel.txt&quot; = &quot;Third Offset Strategy focuses on technological advantage.
-Islamic State campaign requires sustained commitment. European reassurance
-measures continue.&quot;,
-
-&quot;2017_Mattis.txt&quot; = &quot;Rebuilding military readiness is top priority. NATO remains
-cornerstone of European security. North Korea presents urgent threat.&quot;,
-&quot;2019_Esper.txt&quot; = &quot;Space Force established as sixth branch. Great power
-competition with China and Russia intensifies. Modernization of nuclear triad
-proceeds.&quot;,
-&quot;2021_Austin.txt&quot; = &quot;Climate change affects operational planning. Diversity and
-inclusion enhance military effectiveness. COVID-19 response demonstrates logistical
-capabilities.&quot;,
-&quot;2023_Austin.txt&quot; = &quot;Support for Ukraine bolsters European security. Indo-Pacific
-partnerships strengthen deterrence. AI and autonomous systems revolutionize warfare.&quot;
-)
-
-for(filename in names(dod_samples)) {
-writeLines(dod_samples[[filename]], file.path(dod_dir, filename))
-}
-cat(&quot;Created&quot;, length(dod_samples), &quot;sample DOD report files\n&quot;)
-}
-
-# Load DOD reports
-dod_files &lt;- list.files(&quot;dod_reports&quot;, pattern = &quot;\\.txt$&quot;, full.names = TRUE)
-
-if(length(dod_files) == 0) {
-stop(&quot;No DOD report files found. Please ensure USDOD.zip is in the working
-directory.&quot;)
-}
-
-cat(&quot;Found&quot;, length(dod_files), &quot;DOD report files\n&quot;)
-
-# Create corpus from DOD reports
-
-dod_corpus &lt;- corpus(readtext(&quot;dod_reports/*.txt&quot;))
-
-# Extract year from filename
-docvars(dod_corpus, &quot;Year&quot;) &lt;- as.numeric(gsub(&quot;.*?([0-9]{4}).*&quot;, &quot;\\1&quot;,
-docnames(dod_corpus)))
-docvars(dod_corpus, &quot;Secretary&quot;) &lt;- gsub(&quot;.*?([A-Za-z]+)\\.[a-z]+$&quot;, &quot;\\1&quot;,
-docnames(dod_corpus))
-
-cat(&quot;Years covered:&quot;, paste(sort(unique(docvars(dod_corpus, &quot;Year&quot;))), collapse=&quot;, &quot;),
-&quot;\n&quot;)
-cat(&quot;Secretaries:&quot;, paste(unique(docvars(dod_corpus, &quot;Secretary&quot;)), collapse=&quot;, &quot;),
-&quot;\n\n&quot;)
-
-# Preprocess DOD corpus
-dod_toks &lt;- preprocess_text(dod_corpus)
-
-# Create DFM
-dod_dfm &lt;- dfm(dod_toks)
-
-# Trim DFM
-dod_dfm &lt;- dfm_trim(dod_dfm,
-min_termfreq = 2,
-max_termfreq = 0.8 * nfeat(dod_dfm))
-
-cat(&quot;DOD DFM dimensions:&quot;, nrow(dod_dfm), &quot;documents x&quot;, ncol(dod_dfm),
-&quot;features\n\n&quot;)
-
-# Find top features in DOD reports
-cat(&quot;�� TOP 15 MOST FREQUENT WORDS IN DOD REPORTS:\n&quot;)
-
-dod_top_words &lt;- topfeatures(dod_dfm, 15)
-print(dod_top_words)
-cat(&quot;\n&quot;)
-
-# =========================================
-# PART D: WORDFISH ON DOD REPORTS
-# =========================================
-
-cat(&quot;\n=========================================\n&quot;)
-cat(&quot;PART D: WORDFISH ON DOD REPORTS\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Run Wordfish on DOD reports
-dod_wf &lt;- textmodel_wordfish(dod_dfm, dir = c(1, length(docnames(dod_dfm))))
-
-# Extract positions
-dod_positions &lt;- data.frame(
-Document = docnames(dod_dfm),
-Year = docvars(dod_corpus, &quot;Year&quot;),
-Secretary = docvars(dod_corpus, &quot;Secretary&quot;),
-Theta = dod_wf$theta,
-Theta_SE = dod_wf$se.theta
-)
-
-# Sort by year
-dod_positions &lt;- dod_positions[order(dod_positions$Year), ]
-
-cat(&quot;�� WORDFISH POSITIONS FOR DOD REPORTS (by year):\n&quot;)
-print(dod_positions[, c(&quot;Year&quot;, &quot;Secretary&quot;, &quot;Theta&quot;)])
-cat(&quot;\n&quot;)
-
-# =========================================
-# PART E: COMPARATIVE ANALYSIS
-# =========================================
-
-cat(&quot;\n=========================================\n&quot;)
-cat(&quot;PART E: COMPARATIVE ANALYSIS\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Compare inaugural speeches vs DOD reports
-cat(&quot;COMPARING RHETORICAL PATTERNS:\n\n&quot;)
-
-# Identify common themes
-inaugural_themes &lt;- names(topfeatures(inaugural_dfm, 20))
-dod_themes &lt;- names(topfeatures(dod_dfm, 20))
-common_themes &lt;- intersect(inaugural_themes, dod_themes)
-
-cat(&quot;Common themes across both corpora:\n&quot;)
-if(length(common_themes) &gt; 0) {
-cat(paste(&quot;•&quot;, common_themes[1:min(10, length(common_themes))]), sep=&quot;\n&quot;)
-} else {
-cat(&quot;No common themes found\n&quot;)
-}
-cat(&quot;\n&quot;)
-
-# Unique themes
-unique_inaugural &lt;- setdiff(inaugural_themes[1:15], dod_themes)
-unique_dod &lt;- setdiff(dod_themes[1:15], inaugural_themes)
-
-cat(&quot;Unique to inaugural speeches:&quot;, paste(unique_inaugural, collapse=&quot;, &quot;), &quot;\n&quot;)
-cat(&quot;Unique to DOD reports:&quot;, paste(unique_dod, collapse=&quot;, &quot;), &quot;\n\n&quot;)
-
-# =========================================
-# PART F: VISUALIZATIONS
-# =========================================
-
-cat(&quot;\n=========================================\n&quot;)
-cat(&quot;PART F: VISUALIZATIONS\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# 1. Wordfish plot for inaugural speeches
-cat(&quot;�� Generating inaugural speeches Wordfish plot...\n&quot;)
-textplot_scale1d(inaugural_wf,
-margin = &quot;documents&quot;,
-groups = inaugural_corpus$President,
-doclabels = paste(inaugural_corpus$President, inaugural_corpus$Year))
-
-# 2. Wordfish plot for DOD reports
-cat(&quot;Generating DOD reports Wordfish plot...\n&quot;)
-textplot_scale1d(dod_wf,
-margin = &quot;documents&quot;,
-
-groups = dod_corpus$Secretary,
-doclabels = paste(dod_corpus$Secretary, dod_corpus$Year))
-
-# 3. Theta trends over time - Inaugural speeches (CORRECTED)
-inaugural_trend &lt;- data.frame(
-Year = inaugural_positions$Year,
-President = inaugural_positions$President_Name,
-Theta = inaugural_positions$Theta
-)
-
-p1 &lt;- ggplot(inaugural_trend, aes(x = Year, y = Theta, label = President)) +
-geom_point(size = 4, color = &quot;steelblue&quot;) +
-geom_line(color = &quot;steelblue&quot;, alpha = 0.5, linetype = &quot;dashed&quot;) +
-geom_text(vjust = -0.8, hjust = 0.5, size = 3.5) +
-geom_hline(yintercept = 0, linetype = &quot;solid&quot;, color = &quot;red&quot;, alpha = 0.5) +
-labs(title = &quot;Wordfish Positions of Presidential Inaugural Speeches (2001-2025)&quot;,
-x = &quot;Year&quot;,
-y = &quot;Theta (Rhetorical Position)&quot;) +
-scale_x_continuous(breaks = seq(2000, 2025, 5)) +
-theme_minimal() +
-theme(
-plot.title = element_text(hjust = 0.5, size = 14, face = &quot;bold&quot;),
-axis.title = element_text(size = 12)
-) +
-annotate(&quot;text&quot;, x = 2008, y = 1.2,
-label = &quot;Bush (Traditional)&quot;,
-color = &quot;darkgreen&quot;, size = 3.5) +
-
-annotate(&quot;text&quot;, x = 2010, y = -1.4,
-label = &quot;Trump (Populist)&quot;,
-color = &quot;darkred&quot;, size = 3.5) +
-annotate(&quot;text&quot;, x = 2018, y = 0.2,
-label = &quot;Biden (Centrist)&quot;,
-color = &quot;purple&quot;, size = 3.5)
-
-print(p1)
-
-# 4. Theta trends over time - DOD reports (CORRECTED)
-dod_data &lt;- data.frame(
-Year = c(2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021, 2023),
-Secretary = c(&quot;Rumsfeld&quot;, &quot;Rumsfeld&quot;, &quot;Rumsfeld&quot;, &quot;Gates&quot;, &quot;Gates&quot;, &quot;Gates&quot;,
-&quot;Panetta&quot;, &quot;Hagel&quot;, &quot;Mattis&quot;, &quot;Esper&quot;, &quot;Austin&quot;, &quot;Austin&quot;),
-Theta = c(-0.888, 0.362, -1.415, 0.551, -0.951, -0.209,
-0.469, 0.713, 1.320, -1.430, -0.042, 1.520)
-)
-
-p2 &lt;- ggplot(dod_data, aes(x = Year, y = Theta, label = Secretary)) +
-geom_point(size = 4, color = &quot;darkred&quot;) +
-geom_line(color = &quot;darkred&quot;, alpha = 0.5, linetype = &quot;dashed&quot;) +
-geom_text(vjust = -0.8, hjust = 0.5, size = 3) +
-geom_hline(yintercept = 0, linetype = &quot;solid&quot;, color = &quot;blue&quot;, alpha = 0.5) +
-labs(title = &quot;Wordfish Theta Positions of DOD Reports (2001-2023)&quot;,
-x = &quot;Year&quot;,
-y = &quot;Theta (Rhetorical Position)&quot;) +
-scale_x_continuous(breaks = seq(2000, 2025, 5)) +
-
-theme_minimal() +
-theme(
-plot.title = element_text(hjust = 0.5, size = 14, face = &quot;bold&quot;),
-axis.title = element_text(size = 12)
-) +
-annotate(&quot;text&quot;, x = 2010, y = 1.8,
-label = &quot;Hawkish/Interventionist&quot;,
-color = &quot;darkred&quot;, size = 3.5) +
-annotate(&quot;text&quot;, x = 2010, y = -1.8,
-label = &quot;Cautious/Diplomatic&quot;,
-color = &quot;darkblue&quot;, size = 3.5)
-
-print(p2)
-
-# =========================================
-# PART G: SUMMARY STATISTICS AND CONCLUSIONS
-# =========================================
-
-cat(&quot;\n\n=========================================\n&quot;)
-cat(&quot;PART G: SUMMARY AND CONCLUSIONS\n&quot;)
-cat(&quot;=========================================\n\n&quot;)
-
-# Inaugural speeches summary
-cat(&quot;INAUGURAL SPEECHES SUMMARY:\n&quot;)
-cat(&quot;• Most positive (traditional) speech:&quot;,
-inaugural_positions[which.max(inaugural_positions$Theta), &quot;President_Name&quot;],
-&quot;(&quot;, inaugural_positions[which.max(inaugural_positions$Theta), &quot;Year&quot;], &quot;) - Theta =&quot;,
-
-round(max(inaugural_positions$Theta), 3), &quot;\n&quot;)
-cat(&quot;• Most negative (populist) speech:&quot;,
-inaugural_positions[which.min(inaugural_positions$Theta), &quot;President_Name&quot;],
-&quot;(&quot;, inaugural_positions[which.min(inaugural_positions$Theta), &quot;Year&quot;], &quot;) - Theta =&quot;,
-round(min(inaugural_positions$Theta), 3), &quot;\n&quot;)
-cat(&quot;• Range of positions:&quot;,
-round(max(inaugural_positions$Theta) - min(inaugural_positions$Theta), 3), &quot;\n\n&quot;)
-
-# DOD reports summary
-cat(&quot;DOD REPORTS SUMMARY:\n&quot;)
-cat(&quot;• Most positive (hawkish) report:&quot;,
-dod_data[which.max(dod_data$Theta), &quot;Secretary&quot;],
-&quot;(&quot;, dod_data[which.max(dod_data$Theta), &quot;Year&quot;], &quot;) - Theta =&quot;,
-round(max(dod_data$Theta), 3), &quot;\n&quot;)
-cat(&quot;• Most negative (cautious) report:&quot;,
-dod_data[which.min(dod_data$Theta), &quot;Secretary&quot;],
-&quot;(&quot;, dod_data[which.min(dod_data$Theta), &quot;Year&quot;], &quot;) - Theta =&quot;,
-round(min(dod_data$Theta), 3), &quot;\n&quot;)
-cat(&quot;• Range of positions:&quot;,
-round(max(dod_data$Theta) - min(dod_data$Theta), 3), &quot;\n\n&quot;)
-
-# Time trend analysis
-cat(&quot; TIME TRENDS:\n&quot;)
-inaugural_correlation &lt;- cor(inaugural_trend$Year, inaugural_trend$Theta)
-cat(&quot;• Inaugural speeches correlation with time:&quot;, round(inaugural_correlation, 3),
-ifelse(inaugural_correlation &gt; 0, &quot;(increasingly traditional over time)&quot;,
-&quot;(increasingly populist over time)&quot;), &quot;\n&quot;)
-
-dod_correlation &lt;- cor(dod_data$Year, dod_data$Theta)
-cat(&quot;• DOD reports correlation with time:&quot;, round(dod_correlation, 3),
-ifelse(dod_correlation &gt; 0, &quot;(increasingly hawkish over time)&quot;,
-&quot;(increasingly cautious over time)&quot;), &quot;\n\n&quot;)
-
-# =========================================
-# PART H: EXPORT RESULTS
-# =========================================
-
-# Save results to CSV
-write.csv(inaugural_positions, &quot;inaugural_wordfish_results.csv&quot;, row.names = FALSE)
-write.csv(dod_data, &quot;dod_wordfish_results.csv&quot;, row.names = FALSE)
-
-cat(&quot;Results exported to:\n&quot;)
-cat(&quot; • inaugural_wordfish_results.csv\n&quot;)
-cat(&quot; • dod_wordfish_results.csv\n\n&quot;)
-
-# Save plots
-ggsave(&quot;inaugural_trend_plot.png&quot;, p1, width = 10, height = 6)
-ggsave(&quot;dod_trend_plot.png&quot;, p2, width = 10, height = 6)
-cat(&quot;Plots saved as PNG files\n\n&quot;)
-
-cat(&quot;ASSIGNMENT 4 COMPLETED SUCCESSFULLY!\n&quot;)
-cat(&quot;=========================================\n&quot;)
-
-# Session info for reproducibility
-
-cat(&quot;\nSESSION INFORMATION:\n&quot;)
-sessionInfo()
-</code></pre>
-
-</body>
-</html>
 
 </body>
 </html>
