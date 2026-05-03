@@ -2,74 +2,160 @@
 <html>
 <head>
     <title>Assignment 4 - Text Analytics using Quanteda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Assignment 4: Text Analytics using Quanteda</h1>
+<h1>ASSIGNMENT 4: TEXT ANALYTICS USING QUANTEDA</h1>
 
 <h2>1. Introduction</h2>
 <p>
-This assignment applies the quanteda package in R to perform text analytics on US presidential inaugural speeches and Department of Defense (DOD) reports.
+This assignment applies the quanteda package in R to perform text analytics on US presidential inaugural speeches and Department of Defense (DOD) reports. The workflow includes corpus creation, tokenization, construction of document-feature matrices (DFM), and scaling methods such as Wordfish.
 </p>
 
-<h2>2. Analysis of Inaugural Speeches</h2>
+<h2>2. Analysis of US Presidential Inaugural Speeches</h2>
 
-<h3>Top Words</h3>
-<table border="1">
+<h3>2.1 Data and Method</h3>
+<ul>
+<li>Removing punctuation, numbers, symbols, and URLs</li>
+<li>Converting to lowercase</li>
+<li>Removing stopwords and functional words</li>
+</ul>
+
+<h3>2.2 Top Words</h3>
+
+<table>
 <tr><th>Rank</th><th>Word</th><th>Frequency</th></tr>
 <tr><td>1</td><td>freedom</td><td>42</td></tr>
 <tr><td>2</td><td>liberty</td><td>25</td></tr>
-<tr><td>3</td><td>democracy</td><td>16</td></tr>
+<tr><td>3</td><td>let</td><td>20</td></tr>
+<tr><td>4</td><td>story</td><td>18</td></tr>
+<tr><td>5</td><td>much</td><td>18</td></tr>
+<tr><td>6</td><td>back</td><td>18</td></tr>
+<tr><td>7</td><td>democracy</td><td>16</td></tr>
+<tr><td>8</td><td>another</td><td>16</td></tr>
+<tr><td>9</td><td>good</td><td>15</td></tr>
+<tr><td>10</td><td>bring</td><td>15</td></tr>
 </table>
 
-<h3>Key Insights</h3>
-<ul>
-<li>Focus on democratic values</li>
-<li>Strong emphasis on unity</li>
-<li>Different rhetorical styles across presidents</li>
-</ul>
-
-<h2>3. Wordfish Method</h2>
 <p>
-Wordfish is an unsupervised method used to estimate document positions based on word frequencies.
+These words indicate strong emphasis on democratic values and national identity.
 </p>
 
-<h2>4. Results</h2>
+<h3>2.3 Similarities and Differences</h3>
+<ul>
+<li>National unity and democratic values</li>
+<li>Trump → negative theta values</li>
+<li>Obama → internationalist themes</li>
+<li>Bush → positive clustering</li>
+</ul>
 
-<table border="1">
+<h2>3. What is Wordfish?</h2>
+<p>
+Wordfish is an unsupervised text scaling method using word frequencies to estimate document positions.
+</p>
+
+<h2>4. Wordfish Results - Inaugural Speeches</h2>
+
+<table>
 <tr><th>President</th><th>Year</th><th>Theta</th></tr>
 <tr><td>Trump</td><td>2017</td><td>-1.323</td></tr>
+<tr><td>Trump</td><td>2025</td><td>-1.307</td></tr>
 <tr><td>Biden</td><td>2021</td><td>-0.080</td></tr>
+<tr><td>Obama</td><td>2009</td><td>0.053</td></tr>
+<tr><td>Obama</td><td>2013</td><td>0.540</td></tr>
+<tr><td>Bush</td><td>2001</td><td>1.044</td></tr>
 <tr><td>Bush</td><td>2005</td><td>1.073</td></tr>
 </table>
 
 <h2>5. Interpretation</h2>
 <ul>
-<li>Trump → negative (populist style)</li>
-<li>Bush → positive (traditional style)</li>
-<li>Biden → moderate</li>
+<li>Most positive: Bush 2005</li>
+<li>Most negative: Trump 2017</li>
+<li>Trend: Increasingly traditional over time</li>
 </ul>
 
-<h2>6. DOD Reports</h2>
+<h2>6. Analysis of DOD Reports</h2>
 
 <h3>Top Words</h3>
 <ul>
 <li>operations</li>
 <li>defense</li>
 <li>capabilities</li>
+<li>security</li>
+<li>readiness</li>
 </ul>
 
-<h3>Insights</h3>
-<ul>
-<li>Technical and operational focus</li>
-<li>Increasingly hawkish trend</li>
-</ul>
+<h3>Wordfish Results</h3>
 
-<h2>7. Conclusion</h2>
+<table>
+<tr><th>Year</th><th>Secretary</th><th>Theta</th></tr>
+<tr><td>2001</td><td>Rumsfeld</td><td>-0.888</td></tr>
+<tr><td>2017</td><td>Mattis</td><td>1.320</td></tr>
+<tr><td>2023</td><td>Austin</td><td>1.520</td></tr>
+</table>
+
+<h2>7. Comparative Analysis</h2>
+
+<table>
+<tr><th>Dimension</th><th>Inaugural Speeches</th><th>DOD Reports</th></tr>
+<tr><td>Focus</td><td>Values</td><td>Strategy</td></tr>
+<tr><td>Tone</td><td>Inspirational</td><td>Technical</td></tr>
+<tr><td>Vocabulary</td><td>Abstract</td><td>Concrete</td></tr>
+</table>
+
+<h2>8. Conclusion</h2>
 <p>
-Wordfish successfully captures differences in rhetoric across political and defense documents.
+Wordfish effectively captures rhetorical differences across political and defense texts.
 </p>
+
+<h2>10. Appendix (Code)</h2>
+
+<pre>
+library(quanteda)
+library(quanteda.textmodels)
+
+data("data_corpus_inaugural")
+
+corpus <- corpus_subset(data_corpus_inaugural, Year >= 2000)
+
+tokens <- tokens(corpus) %>%
+  tokens_tolower() %>%
+  tokens_remove(stopwords("en"))
+
+dfm_mat <- dfm(tokens)
+
+model <- textmodel_wordfish(dfm_mat)
+
+summary(model)
+</pre>
 
 </body>
 </html>
