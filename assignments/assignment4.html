@@ -1,21 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assignment 4</title>
+    <title>Assignment 4 - Text Analytics</title>
+
     <style>
         body {
-            font-family: monospace;
-            margin: 40px;
+            background-color: #eef2f7;
+            margin: 0;
+            font-family: "Times New Roman", serif;
         }
+
+        .page {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         pre {
             white-space: pre-wrap;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 15px;
+            line-height: 1.6;
+            font-family: "Times New Roman", serif;
         }
     </style>
 </head>
 
 <body>
+
+<div class="page">
+
+<h1>Assignment 4</h1>
 
 <pre>
 ASSIGNMENT 4: TEXT ANALYTICS USING QUANTEDA
@@ -24,75 +45,169 @@ This assignment applies the quanteda package in R to perform text analytics on U
 2. Analysis of US Presidential Inaugural Speeches
 2.1 Data and Method
 The built-in data_corpus_inaugural from quanteda was used, subset to include speeches from 2000-2025 (7 speeches). Texts were preprocessed by:
-• Removing punctuation, numbers, symbols, and URLs
-• Converting to lowercase
-• Removing English stopwords and common functional words (will, can, must, shall, may, one, two, three)
+· Removing punctuation, numbers, symbols, and URLs
+· Converting to lowercase
+· Removing English stopwords and common functional words (will, can, must, shall, may, one, two, three)
 A document-feature matrix (DFM) was constructed and trimmed to retain words appearing in at least 2 documents and no more than 80% of documents.
 2.2 Top Words
 The most frequent words in inaugural speeches are:
-Rank    Word    Frequency
-1   freedom    42
-2   liberty    25
-3   let    20
-4   story  18
-5   much   18
-6   back   18
-7   democracy   16
-8   another 16
-9   good   15
-10  bring  15
+	Rank
+	Word
+	Frequency
+
+	1
+	freedom
+	42
+
+	2
+	liberty
+	25
+
+	3
+	let
+	20
+
+	4
+	story
+	18
+
+	5
+	much
+	18
+
+	6
+	back
+	18
+
+	7
+	democracy
+	16
+
+	8
+	another
+	16
+
+	9
+	good
+	15
+
+	10
+	bring
+	15
+
+
 
 These words indicate a strong emphasis on democratic values, national identity, and collective responsibility.
 2.3 Similarities and Differences
 Similarities across speeches:
-• National unity and public responsibility
-• Democratic values and peaceful transfer of power
-• References to freedom and liberty
+· National unity and public responsibility
+· Democratic values and peaceful transfer of power
+· References to freedom and liberty
 Differences:
-• Trump's speeches show distinctive rhetorical patterns (negative theta values)
-• Obama's speeches emphasize traditional/internationalist themes
-• Bush's speeches cluster together with positive theta values
-• Variation reflects historical context and political priorities
+· Trump's speeches show distinctive rhetorical patterns (negative theta values)
+· Obama's speeches emphasize traditional/internationalist themes
+· Bush's speeches cluster together with positive theta values
+· Variation reflects historical context and political priorities
 3. What is Wordfish?
 Wordfish is an unsupervised text scaling method that estimates the position of documents along a latent dimension using word frequencies.
 Key Features:
-• Does not require labeled data
-• Identifies hidden patterns in text
-• Assigns each document a numerical position (theta)
-• Helps compare documents based on language use
-• Widely used in political text analysis to identify differences in rhetoric and positioning
+· Does not require labeled data
+· Identifies hidden patterns in text
+· Assigns each document a numerical position (theta)
+· Helps compare documents based on language use
+· Widely used in political text analysis to identify differences in rhetoric and positioning
 How it works:
 Wordfish assumes a Poisson distribution for word counts and estimates:
-• Document positions (theta) - where each document falls on the latent dimension
-• Feature parameters (beta) - how strongly each word discriminates
-• Feature fixed effects (psi) - word frequency baselines
+· Document positions (theta) - where each document falls on the latent dimension
+· Feature parameters (beta) - how strongly each word discriminates
+· Feature fixed effects (psi) - word frequency baselines
 4. Wordfish Results - Inaugural Speeches
 Figure 1: Wordfish Plot of Inaugural Speeches
 The Wordfish model produced the following document positions:
-President   Year    Theta (Position)    Standard Error
-Trump   2017    -1.323  0.058
-Trump   2025    -1.307  0.047
-Biden   2021    -0.080  0.054
-Obama   2009    0.053   0.052
-Obama   2013    0.540   0.050
-Bush    2001    1.044   0.052
-Bush    2005    1.073   0.045
+	President
+	Year
+	Theta (Position)
+	Standard Error
+
+	Trump
+	2017
+	-1.323
+	0.058
+
+	Trump
+	2025
+	-1.307
+	0.047
+
+	Biden
+	2021
+	-0.080
+	0.054
+
+	Obama
+	2009
+	0.053
+	0.052
+
+	Obama
+	2013
+	0.540
+	0.050
+
+	Bush
+	2001
+	1.044
+	0.052
+
+	Bush
+	2005
+	1.073
+	0.045
+
+
 Model Summary:
-• Direction fixed: Trump 2017 (negative) vs. Obama 2009 (positive)
-• Number of documents: 7
-• Number of features: 851 after trimming
+· Direction fixed: Trump 2017 (negative) vs. Obama 2009 (positive)
+· Number of documents: 7
+· Number of features: 851 after trimming
 5. Interpretation of Inaugural Speech Results
 Figure 2: Theta Trends Over Time for Presidential Inaugural Speeches (2000-2025)
 
 Key Findings:
-Finding Value Interpretation
-Most positive (nationalist) Bush 2005 (θ = 1.073) Strong traditional/conservative rhetoric
-Most negative (traditional) Trump 2017 (θ = -1.323) Distinctive anti-establishment rhetoric
-Range of positions 2.395 Wide variation in rhetorical styles
-Correlation with time -0.828 Increasingly traditional over time
+	Finding
+	Value
+	Interpretation
+
+	Most positive (nationalist)
+	Bush 2005 (θ = 1.073)
+	Strong traditional/conservative rhetoric
+
+	Most negative (traditional)
+	Trump 2017 (θ = -1.323)
+	Distinctive anti-establishment rhetoric
+
+	Range of positions
+	2.395
+	Wide variation in rhetorical styles
+
+	Correlation with time
+	-0.828
+	Increasingly traditional over time
+
+
+Rhetorical Patterns:
+· Donald Trump (2017, 2025): Strong negative values → distinctive, populist rhetorical style
+· Barack Obama (2009, 2013): Moderate positive values → traditional, internationalist language
+· Joe Biden (2021): Near-zero value (θ = -0.080) → centrist, moderate language
+· George W. Bush (2001, 2005): Strong positive values → traditional conservative rhetoric
+Over-time Analysis:
+· Obama remained relatively stable (θ: 0.053 → 0.540)
+· Trump remained stable with slight moderation (θ: -1.323 → -1.307)
+· Negative correlation (-0.828) suggests speeches have become more "traditional" in Wordfish terms over time
 ...
-(continues exactly same — keep pasting FULL text here)
+(continue FULL text exactly the same until end)
 </pre>
+
+</div>
 
 </body>
 </html>
